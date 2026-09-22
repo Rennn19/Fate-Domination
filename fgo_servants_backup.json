@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1790103193704,
+    "name": "a",
+    "jpName": "",
+    "class": "MoonCancer",
+    "rarity": 5,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790102939/archetype_zbqhev.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "",
+        "text": "Servant Saber, answering your summons."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "https://res.cloudinary.com/mtns8net/image/upload/v1790102939/archetype_zbqhev.png record archived in Chaldea."
+    ]
+  },
+  {
+    "id": 1790103169497,
+    "name": "m",
+    "jpName": "",
+    "class": "Ruler",
+    "rarity": 5,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790102918/moriarty_1_mcrqzq.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "",
+        "text": "Servant Saber, answering your summons."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "m record archived in Chaldea."
+    ]
+  },
+  {
+    "id": 1790102878835,
+    "name": "n",
+    "jpName": "",
+    "class": "Rider",
+    "rarity": 5,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790102522/noah_1_ncrz9n.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "",
+        "text": "Servant Saber, answering your summons."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "n record archived in Chaldea."
+    ]
+  },
+  {
+    "id": 1790102864059,
+    "name": "v",
+    "jpName": "",
+    "class": "Lancer",
+    "rarity": 5,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790102277/vritra_1_axoapl.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "",
+        "text": "Servant Saber, answering your summons."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "v record archived in Chaldea."
+    ]
+  },
+  {
+    "id": 1790102847818,
+    "name": "l",
+    "jpName": "",
+    "class": "Berserker",
+    "rarity": 5,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790102173/lilith_1_t1hqaz.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "",
+        "text": "Servant Saber, answering your summons."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "l record archived in Chaldea."
+    ]
+  },
+  {
+    "id": 1790102816065,
+    "name": "t",
+    "jpName": "",
+    "class": "Assassin",
+    "rarity": 5,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790102152/tezcat_yhuncv.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "",
+        "text": "Servant Saber, answering your summons."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "t record archived in Chaldea."
+    ]
+  },
+  {
+    "id": 1790102698645,
+    "name": "a",
+    "jpName": "",
+    "class": "Caster",
+    "rarity": 5,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790102132/anastasia_j2kygk.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "",
+        "text": "Servant Saber, answering your summons."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "a record archived in Chaldea."
+    ]
+  },
+  {
+    "id": 1790102673362,
+    "name": "b",
+    "jpName": "",
+    "class": "Archer",
+    "rarity": 4,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790101263/Baobhan_sith_mg49cd.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "",
+        "text": "Servant Saber, answering your summons."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "b record archived in Chaldea."
+    ]
+  },
+  {
+    "id": 1790091711709,
+    "name": "e",
+    "jpName": "g g g",
+    "class": "Saber",
+    "rarity": 5,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790100658/musashi_oarxyg.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "",
+        "text": "Servant Saber, answering your summons."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "e record archived in Chaldea."
+    ]
+  },
+  {
+    "id": 1790091034178,
+    "name": "a",
+    "jpName": "",
+    "class": "Avenger",
+    "rarity": 5,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790100409/Oda_Nobunaga_yf1lqh.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "",
+        "text": "Servant Saber, answering your summons."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "a record archived in Chaldea."
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Artoria Pendragon",
+    "jpName": "アルトリア・ペンドラゴン",
+    "class": "Saber",
+    "rarity": 5,
+    "gender": "Female",
+    "race": "Human / Dragon",
+    "illustrator": "Takashi Takeuchi",
+    "cv": "Ayako Kawasumi",
+    "stats": {
+      "maxAtk": 11221,
+      "maxHp": 15150
+    },
+    "alignment": "Lawful Good",
+    "attribute": "Earth",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790099834/Artoria_a6rdbn.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "https://res.cloudinary.com/mtns8net/video/upload/v1790103945/S002_Summon_yopxm8.ogg",
+        "text": "I ask of you, are you my Master?"
+      },
+      {
+        "title": "Noble Phantasm",
+        "audioUrl": "https://res.cloudinary.com/mtns8net/video/upload/v1790104071/S002_NP2_naqnsi.ogg",
+        "text": "This light is the planet's hope...proof of the life that illuminates this world! Behold! Ex... CALIBUR!"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Charisma A",
+        "effect": "Increases ATK for all allies (3 turns)."
+      },
+      {
+        "name": "Mana Burst A",
+        "effect": "Increases Buster Performance for yourself (1 turn)."
+      },
+      {
+        "name": "Intuition A",
+        "effect": "Gains a large amount of Critical Stars."
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Excalibur",
+      "type": "Buster",
+      "damageStat": "400% - 600% (Depends on NP Level)"
+    },
+    "traits": [
+      "Dragon",
+      "Female",
+      "Humanoid",
+      "King",
+      "Riding",
+      "Arthur"
+    ],
+    "lore": [
+      "The legendary King of Knights who pulled the sword from the stone and united ancient Britain.",
+      "Holder of the Holy Sword Excalibur, she wields the light of hope to protect mankind."
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Gilgamesh",
+    "jpName": "ギルガメッシュ",
+    "class": "Archer",
+    "rarity": 5,
+    "gender": "Male",
+    "race": "Demigod",
+    "illustrator": "Takashi Takeuchi",
+    "cv": "Tomokazu Seki",
+    "stats": {
+      "maxAtk": 12280,
+      "maxHp": 13097
+    },
+    "alignment": "Chaotic Good",
+    "attribute": "Sky",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790100422/Gilgamesh_1_rezxfp.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Ludwig_van_Beethoven_-_Symphony_No._5%2C_Op._67_-_I._Allegro_con_brio.ogg",
+        "text": "Fuhahaha! You have summoned the King of Heroes! Rejoice, mongrel!"
+      },
+      {
+        "title": "Enuma Elish",
+        "audioUrl": "https://upload.wikimedia.org/wikipedia/commons/2/22/Thunder_sound_fx.ogg",
+        "text": "I shall show you the origin of creation. Open, Gate of Babylon!"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Charisma A+",
+        "effect": "Greatly increases ATK for all allies (3 turns)."
+      },
+      {
+        "name": "Golden Rule A",
+        "effect": "Increases own NP Generation Rate (3 turns)."
+      },
+      {
+        "name": "Treasury of Babylon A",
+        "effect": "Increases own Star Absorption Rate and charges NP."
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Enuma Elish",
+      "type": "Buster",
+      "damageStat": "300% - 500% (Deals extra damage to Servants)"
+    },
+    "traits": [
+      "Divine",
+      "Male",
+      "Humanoid",
+      "King"
+    ],
+    "lore": [
+      "The oldest King in human history, who ruled Uruk in ancient Mesopotamia.",
+      "Possesses the originals of all Noble Phantasms stored inside the Gate of Babylon."
+    ]
+  }
+]
