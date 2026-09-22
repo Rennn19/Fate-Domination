@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fate/Domination</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts for Genshin-like typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Noto+Serif+JP:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0e121e 0%, #171d2c 50%, #0a0d16 100%);
+            background-attachment: fixed;
+            color: #ece5d8;
+        }
+        .font-genshin {
+            font-family: 'Cinzel', serif;
+        }
+        .font-japan {
+            font-family: 'Noto Serif JP', serif;
+        }
+        
+        /* Genshin Glassmorphism & Gold Borders */
+        .genshin-card {
+            background: rgba(23, 29, 44, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(204, 165, 102, 0.2);
+            border-radius: 4px 20px 4px 4px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .genshin-card:hover {
+            border-color: #cca566;
+            box-shadow: 0 10px 30px rgba(204, 165, 102, 0.25), 0 0 15px rgba(204, 165, 102, 0.1);
+        }
+        
+        /* Rarities */
+        .star-rating {
+            color: #cca566;
+            text-shadow: 0 0 5px rgba(204, 165, 102, 0.5);
+        }
+        .rarity-5 { 
+            background: linear-gradient(180deg, #513e6b, #bfa054); 
+        }
+        .rarity-4 { 
+            background: linear-gradient(180deg, #3d3b64 0%, #686497 50%, #958cb8 100%); 
+        }
+        .rarity-3 { 
+            background: linear-gradient(180deg, #2b4b5e 0%, #4c7b98 100%); 
+        }
+
+        /* Custom Audio Slider & Scrollbars */
+        input[type=range] {
+            accent-color: #cca566;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(14, 18, 30, 0.8);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cca566;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e2be7d;
+        }
+
+        /* Audio Pulse Effect */
+        @keyframes audioGlow {
+            0%, 100% { box-shadow: 0 0 8px rgba(204, 165, 102, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(204, 165, 102, 0.9); }
+        }
+        .audio-playing {
+            animation: audioGlow 1.8s infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="mb-8 border-b border-[#cca566]/30 pb-6 flex flex-col lg:flex-row justify-between items-center gap-6">
+            <div class="text-center lg:text-left">
+                <div class="flex items-center justify-center lg:justify-start gap-3">
+                    <span class="text-3xl text-[#cca566]">✦</span>
+                    <h1 class="text-3xl md:text-4xl font-black tracking-widest text-white font-genshin drop-shadow-md">FATE/Domination</h1>
+                    <span class="text-3xl text-[#cca566]">✦</span>
+                </div>
+                <p class="text-gray-400 text-xs md:text-sm mt-1 tracking-wider">Servant Database</p>
+            </div>
+            
+            <!-- Filter Controls -->
+            <div class="flex flex-wrap items-center justify-center lg:justify-end gap-3 w-full lg:w-auto">
+                <div class="relative w-full sm:w-48">
+                    <select id="classFilter" onchange="applyFilters()" class="w-full bg-[#161c28] text-white border border-gray-700 focus:border-[#cca566] rounded-full px-4 py-2 text-xs outline-none transition-colors">
+                        <option value="ALL">All Classes</option>
+                        <option value="Saber">Saber</option>
+                        <option value="Archer">Archer</option>
+                        <option value="Lancer">Lancer</option>
+                        <option value="Rider">Rider</option>
+                        <option value="Caster">Caster</option>
+                        <option value="Assassin">Assassin</option>
+                        <option value="Berserker">Berserker</option>
+                        <option value="Extra">Extra Classes</option>
+                    </select>
+                </div>
+                <div class="relative w-full sm:w-60">
+                    <input type="text" id="searchBar" placeholder="Search servant or trait..." class="w-full bg-[#161c28] text-white border border-gray-700 rounded-full px-5 py-2 focus:outline-none focus:border-[#cca566] transition-colors text-xs">
+                </div>
+                <button onclick="openFormModal()" class="w-full sm:w-auto bg-gradient-to-r from-[#cca566] to-[#b59055] hover:from-[#e2be7d] hover:to-[#cca566] text-[#0e121e] font-genshin font-bold px-5 py-2 rounded-full text-xs transition-all flex items-center justify-center gap-1.5 shadow-lg cursor-pointer whitespace-nowrap tracking-wider">
+                    <span>+</span> ADD SERVANT
+                </button>
+                <button onclick="confirmResetData()" title="Reset data to initial state" class="text-xs text-gray-400 hover:text-red-400 underline transition-colors cursor-pointer px-2 py-1">
+                    Reset Data
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Layout (Split Screen) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Side: Character Grid List -->
+            <div class="lg:col-span-2 space-y-4">
+                <div class="flex items-center justify-between px-1 text-xs text-gray-400">
+                    <span id="servantCount">Showing Servants</span>
+                    <span class="text-[#cca566] font-genshin">SELECT TO INSPECT & LISTEN</span>
+                </div>
+                <div id="characterGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <!-- Cards injected by JS -->
+                </div>
+            </div>
+
+            <!-- Right Side: Detailed Showcase View -->
+            <div class="lg:col-span-1">
+                <div id="detailView" class="genshin-card p-6 sticky top-6 hidden flex flex-col justify-between min-h-[640px] relative overflow-hidden z-10">
+                    <!-- Background Elements -->
+                    <div id="bgJapanShadow" class="absolute -left-0 top-10 font-japan text-4xl text-white/20 select-none pointer-events-none z-0 leading-tight"></div>
+                    <div id="bgCharTransparent" class="absolute right-0 top-0 w-full h-full bg-contain bg-no-repeat bg-top md:bg-right-top opacity-20 pointer-events-none z-0 transition-all duration-500"></div>
+                    
+                    <!-- Content Wrapper -->
+                    <div id="detailContent" class="relative z-10 space-y-4">
+                        <!-- Details injected by JS -->
+                    </div>
+                </div>
+                
+                <div id="emptyState" class="genshin-card p-12 text-center text-gray-500 sticky top-6 flex flex-col items-center justify-center min-h-[640px] gap-3">
+                    <div class="w-16 h-16 rounded-full border border-[#cca566]/30 flex items-center justify-center text-[#cca566] text-2xl font-genshin">✦</div>
+                    <p class="font-genshin tracking-widest text-sm text-gray-400">SELECT A SERVANT TO VIEW ARCHIVE & LISTEN TO VOICE LINES</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- POPUP MODAL FOR DEEP LORE & TRAITS & VOICE ARCHIVE -->
+    <div id="loreModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 hidden opacity-0 transition-opacity duration-300 backdrop-blur-md">
+        <div class="bg-[#121723] border-2 border-[#cca566] w-full max-w-3xl rounded-lg p-6 md:p-8 max-h-[85vh] overflow-y-auto relative shadow-2xl">
+            <button onclick="toggleLoreModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl cursor-pointer w-8 h-8 flex items-center justify-center rounded-full bg-black/30">&times;</button>
+            
+            <div class="border-b border-gray-800 pb-4 mb-6">
+                <div class="flex items-center gap-2">
+                    <span class="text-[#cca566] text-xl">✦</span>
+                    <h3 id="modalName" class="text-2xl md:text-3xl font-genshin text-white font-bold tracking-wide">Name</h3>
+                </div>
+                <p id="modalTitleInfo" class="text-xs text-[#cca566] tracking-widest uppercase mt-1">Class Archive & Audio Logs</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="grid grid-cols-2 gap-4 bg-black/30 p-4 rounded-md border border-gray-800 text-xs md:text-sm">
+                    <div><span class="text-gray-500 block text-[11px]">Alignment</span><span id="modalAlignment" class="font-medium text-white">-</span></div>
+                    <div><span class="text-gray-500 block text-[11px]">Attribute</span><span id="modalAttribute" class="font-medium text-white">-</span></div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-genshin text-[#cca566] tracking-widest uppercase mb-2 flex items-center gap-2">
+                        <span>🏷️</span> Traits & Class Tags
+                    </h4>
+                    <div id="modalTraits" class="flex flex-wrap gap-1.5"></div>
+                </div>
+
+                <!-- Voice Archive Section inside Lore Modal -->
+                <div>
+                    <h4 class="text-xs font-genshin text-[#cca566] tracking-widest uppercase mb-2 flex items-center gap-2">
+                        <span>🎙️</span> Voice Lines Archive
+                    </h4>
+                    <div id="modalVoiceArchive" class="space-y-2 bg-black/20 p-3 rounded-md border border-gray-800/80">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-genshin text-[#cca566] tracking-widest uppercase mb-2 flex items-center gap-2">
+                        <span>📖</span> Profile & Background History
+                    </h4>
+                    <div id="modalLore" class="text-xs md:text-sm text-gray-300 space-y-3 leading-relaxed bg-black/20 p-4 rounded-md border border-gray-800/60"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP MODAL FOR EDIT / ADD SERVANT -->
+    <div id="formModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 hidden opacity-0 transition-opacity duration-300 backdrop-blur-md">
+        <div class="bg-[#121723] border-2 border-[#cca566] w-full max-w-4xl rounded-lg p-6 md:p-8 max-h-[90vh] overflow-y-auto relative shadow-2xl">
+            <button onclick="closeFormModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl cursor-pointer w-8 h-8 flex items-center justify-center rounded-full bg-black/30">&times;</button>
+            
+            <div class="border-b border-gray-800 pb-3 mb-6">
+                <h3 id="formModalTitle" class="text-2xl font-genshin text-white font-bold tracking-wide">ADD NEW SERVANT</h3>
+                <p class="text-xs text-[#cca566] tracking-widest uppercase mt-1">Chaldea Database & Voice Registry Editor</p>
+            </div>
+
+            <form id="servantForm" onsubmit="handleFormSubmit(event)" class="space-y-5 text-xs">
+                <input type="hidden" id="editServantId" value="">
+
+                <!-- Basic Info -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-gray-400 mb-1">Servant Name *</label>
+                        <input type="text" id="formName" required class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">JP Name (Kanji/Kana)</label>
+                        <input type="text" id="formJpName" placeholder="e.g. アルトリア" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">Class *</label>
+                        <select id="formClass" required class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                            <option value="Saber">Saber</option>
+                            <option value="Archer">Archer</option>
+                            <option value="Lancer">Lancer</option>
+                            <option value="Rider">Rider</option>
+                            <option value="Caster">Caster</option>
+                            <option value="Assassin">Assassin</option>
+                            <option value="Berserker">Berserker</option>
+                            <option value="Ruler">Ruler</option>
+                            <option value="Avenger">Avenger</option>
+                            <option value="MoonCancer">MoonCancer</option>
+                            <option value="Foreigner">Foreigner</option>
+                            <option value="Pretender">Pretender</option>
+                            <option value="Beast">Beast</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div>
+                        <label class="block text-gray-400 mb-1">Rarity</label>
+                        <select id="formRarity" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                            <option value="5">5 Stars ★★★★★</option>
+                            <option value="4">4 Stars ★★★★</option>
+                            <option value="3">3 Stars ★★★</option>
+                            <option value="2">2 Stars ★★</option>
+                            <option value="1">1 Star ★</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">Gender</label>
+                        <input type="text" id="formGender" placeholder="Female / Male" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">Max ATK</label>
+                        <input type="number" id="formMaxAtk" placeholder="12000" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">Max HP</label>
+                        <input type="number" id="formMaxHp" placeholder="15000" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-gray-400 mb-1">Illustrator</label>
+                        <input type="text" id="formIllustrator" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">Voice Actor (CV)</label>
+                        <input type="text" id="formCv" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">Race</label>
+                        <input type="text" id="formRace" placeholder="Human / Dragon" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-gray-400 mb-1">Alignment</label>
+                        <input type="text" id="formAlignment" placeholder="Lawful Good" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">Attribute</label>
+                        <input type="text" id="formAttribute" placeholder="Earth / Sky / Man" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-gray-400 mb-1">Image URL (Transparent PNG recommended)</label>
+                    <input type="url" id="formImage" placeholder="https://..." class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                </div>
+
+                <!-- Voice Over Audio Lines Input Section -->
+                <div class="border-t border-[#cca566]/30 pt-3 bg-black/20 p-3 rounded-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-[#cca566] font-genshin font-bold text-xs flex items-center gap-1.5">
+                            <span>🎙️</span> VOICE OVER AUDIO LINES
+                        </label>
+                        <button type="button" onclick="addVoiceLineInputRow()" class="text-[11px] bg-[#cca566]/20 hover:bg-[#cca566]/40 text-[#cca566] border border-[#cca566]/40 px-2.5 py-1 rounded transition-colors cursor-pointer">
+                            + Add Voice Line
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-gray-400 mb-3">Provide MP3/WAV links and dialogue text. If audio link fails or is blank, the browser will use AI Speech Synthesis to read the text!</p>
+                    
+                    <div id="voiceLinesContainer" class="space-y-3">
+                        <!-- Dynamic Voice Line Inputs Injected Here -->
+                    </div>
+                </div>
+
+                <!-- Skills Fields -->
+                <div class="border-t border-gray-800 pt-3">
+                    <label class="block text-[#cca566] font-genshin mb-2">ACTIVE SKILLS</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <div class="space-y-1">
+                            <input type="text" id="formSkill1Name" placeholder="Skill 1 Name" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-1.5 focus:border-[#cca566] outline-none">
+                            <input type="text" id="formSkill1Effect" placeholder="Skill 1 Effect" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-1.5 focus:border-[#cca566] outline-none">
+                        </div>
+                        <div class="space-y-1">
+                            <input type="text" id="formSkill2Name" placeholder="Skill 2 Name" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-1.5 focus:border-[#cca566] outline-none">
+                            <input type="text" id="formSkill2Effect" placeholder="Skill 2 Effect" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-1.5 focus:border-[#cca566] outline-none">
+                        </div>
+                        <div class="space-y-1">
+                            <input type="text" id="formSkill3Name" placeholder="Skill 3 Name" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-1.5 focus:border-[#cca566] outline-none">
+                            <input type="text" id="formSkill3Effect" placeholder="Skill 3 Effect" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-1.5 focus:border-[#cca566] outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Noble Phantasm Fields -->
+                <div class="border-t border-gray-800 pt-3">
+                    <label class="block text-[#cca566] font-genshin mb-2">NOBLE PHANTASM</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <input type="text" id="formNpName" placeholder="NP Name" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                        <select id="formNpType" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                            <option value="Buster">Buster</option>
+                            <option value="Arts">Arts</option>
+                            <option value="Quick">Quick</option>
+                        </select>
+                        <input type="text" id="formNpDamage" placeholder="Multiplier (e.g. 400% - 600%)" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                    </div>
+                </div>
+
+                <!-- Traits & Lore -->
+                <div class="border-t border-gray-800 pt-3">
+                    <label class="block text-gray-400 mb-1">Traits (Comma separated)</label>
+                    <input type="text" id="formTraits" placeholder="Dragon, Female, Humanoid, King" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-gray-400 mb-1">Lore / Background Paragraphs (Separated by new lines)</label>
+                    <textarea id="formLore" rows="3" placeholder="Paragraph 1&#10;Paragraph 2" class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none"></textarea>
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3 border-t border-gray-800">
+                    <button type="button" onclick="closeFormModal()" class="px-5 py-2 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 font-genshin cursor-pointer">CANCEL</button>
+                    <button type="submit" class="px-6 py-2 rounded bg-gradient-to-r from-[#cca566] to-[#b59055] hover:from-[#e2be7d] hover:to-[#cca566] text-[#0e121e] font-genshin font-bold cursor-pointer">SAVE SERVANT</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CUSTOM CONFIRMATION & TOAST NOTIFICATION MODAL -->
+    <div id="confirmModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 hidden opacity-0 transition-opacity duration-200">
+        <div class="bg-[#121723] border border-[#cca566] p-6 rounded-lg max-w-sm w-full text-center space-y-4 shadow-2xl">
+            <h4 id="confirmTitle" class="text-lg font-genshin text-white font-bold">CONFIRMATION</h4>
+            <p id="confirmMessage" class="text-xs text-gray-300 leading-relaxed"></p>
+            <div class="flex justify-center gap-3 pt-2">
+                <button id="confirmCancelBtn" class="px-4 py-1.5 text-xs rounded bg-gray-800 hover:bg-gray-700 text-gray-300 font-genshin cursor-pointer">CANCEL</button>
+                <button id="confirmOkBtn" class="px-4 py-1.5 text-xs rounded bg-[#cca566] hover:bg-[#b59055] text-[#0e121e] font-genshin font-bold cursor-pointer">PROCEED</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#161c28] border border-[#cca566] text-white px-4 py-2.5 rounded shadow-xl text-xs flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <span class="text-[#cca566]">✦</span>
+        <span id="toastMsg">Message</span>
+    </div>
+
+    <!-- JavaScript Data & Logic -->
+    <script>
+        const initialServants = [
+            {
+                "id": 1,
+                "name": "Artoria Pendragon",
+                "jpName": "アルトリア・ペンドラゴン",
+                "class": "Saber",
+                "rarity": 5,
+                "gender": "Female",
+                "race": "Human / Dragon",
+                "illustrator": "Takashi Takeuchi",
+                "cv": "Ayako Kawasumi",
+                "skills": [
+                    { "name": "Charisma A", "effect": "Increases ATK for all allies (3 turns)." },
+                    { "name": "Mana Burst A", "effect": "Increases Buster Performance for yourself (1 turn)." },
+                    { "name": "Intuition A", "effect": "Gains a large amount of Critical Stars." }
+                ],
+                "noblePhantasm": {
+                    "name": "Excalibur",
+                    "type": "Buster",
+                    "card": "AoE",
+                    "damageStat": "400% - 600% (Depends on NP Level)"
+                },
+                "stats": { "maxHp": 15150, "maxAtk": 11221 },
+                "alignment": "Lawful Good",
+                "attribute": "Earth",
+                "traits": ["Dragon", "Female", "Humanoid", "King", "Riding", "Arthur"],
+                "description": "The legendary King of Knights who pulled the sword from the stone.",
+                "lore": [
+                    "The legendary King of Knights who pulled the sword from the stone and united ancient Britain.",
+                    "Holder of the Holy Sword Excalibur, she wields the light of hope to protect mankind."
+                ],
+                "image": "https://upload.wikimedia.org/wikipedia/en/f/fa/SaberFateGrandOrder.png",
+                "voiceLines": [
+                    {
+                        "title": "Summoning",
+                        "text": "Servant Saber. I have answered your summons. I ask of you, are you my Master?",
+                        "audioUrl": "https://upload.wikimedia.org/wikipedia/commons/4/40/Tchaikovsky_-_1812_Overture_%28Finale_excerpt%29.ogg"
+                    },
+                    {
+                        "title": "Noble Phantasm",
+                        "text": "Sword of Promised Victory! Ex... CALIBUR!",
+                        "audioUrl": "https://upload.wikimedia.org/wikipedia/commons/3/34/Sound_Effect_-_Magic_Spell.ogg"
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Gilgamesh",
+                "jpName": "ギルガメッシュ",
+                "class": "Archer",
+                "rarity": 5,
+                "gender": "Male",
+                "race": "Demigod",
+                "illustrator": "Takashi Takeuchi",
+                "cv": "Tomokazu Seki",
+                "skills": [
+                    { "name": "Charisma A+", "effect": "Greatly increases ATK for all allies (3 turns)." },
+                    { "name": "Golden Rule A", "effect": "Increases own NP Generation Rate (3 turns)." },
+                    { "name": "Treasury of Babylon A", "effect": "Increases own Star Absorption Rate and charges NP." }
+                ],
+                "noblePhantasm": {
+                    "name": "Enuma Elish",
+                    "type": "Buster",
+                    "card": "AoE",
+                    "damageStat": "300% - 500% (Deals extra damage to Servants)"
+                },
+                "stats": { "maxHp": 13097, "maxAtk": 12280 },
+                "alignment": "Chaotic Good",
+                "attribute": "Sky",
+                "traits": ["Divine", "Male", "Humanoid", "King"],
+                "description": "The King of Heroes from ancient Mesopotamia.",
+                "lore": [
+                    "The oldest King in human history, who ruled Uruk in ancient Mesopotamia.",
+                    "Possesses the originals of all Noble Phantasms stored inside the Gate of Babylon."
+                ],
+                "image": "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500",
+                "voiceLines": [
+                    {
+                        "title": "Summoning",
+                        "text": "Fuhahaha! You have summoned the King of Heroes! Rejoice, mongrel!",
+                        "audioUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Ludwig_van_Beethoven_-_Symphony_No._5%2C_Op._67_-_I._Allegro_con_brio.ogg"
+                    },
+                    {
+                        "title": "Enuma Elish",
+                        "text": "I shall show you the origin of creation. Open, Gate of Babylon!",
+                        "audioUrl": "https://upload.wikimedia.org/wikipedia/commons/2/22/Thunder_sound_fx.ogg"
+                    }
+                ]
+            }
+        ];
+
+        function loadServantData() {
+            const stored = localStorage.getItem('fgo_genshin_servants_db_v2');
+            if (stored) {
+                try { return JSON.parse(stored); } catch(e) {}
+            }
+            return initialServants;
+        }
+
+        function saveServantData() {
+            localStorage.setItem('fgo_genshin_servants_db_v2', JSON.stringify(servantData));
+        }
+
+        let servantData = loadServantData();
+        let selectedServant = null;
+        let selectedVoiceIndex = 0;
+
+        // Global Audio Controller Instance
+        let activeAudio = new Audio();
+        let isAudioPlaying = false;
+        let audioProgressTimer = null;
+
+        // DOM References
+        const gridContainer = document.getElementById('characterGrid');
+        const detailView = document.getElementById('detailView');
+        const emptyState = document.getElementById('emptyState');
+        const searchBar = document.getElementById('searchBar');
+        const classFilter = document.getElementById('classFilter');
+        const loreModal = document.getElementById('loreModal');
+        const formModal = document.getElementById('formModal');
+        const servantCount = document.getElementById('servantCount');
+
+        function renderGrid(data) {
+            gridContainer.innerHTML = '';
+            servantCount.innerText = `Showing ${data.length} Servant${data.length === 1 ? '' : 's'}`;
+
+            if (data.length === 0) {
+                gridContainer.innerHTML = `
+                    <div class="col-span-full genshin-card p-8 text-center text-gray-400 text-xs font-genshin tracking-wider">
+                        NO SERVANTS FOUND MATCHING CRITERIA.
+                    </div>`;
+                return;
+            }
+
+            data.forEach(servant => {
+                const bgClass = servant.rarity >= 5 ? 'rarity-5' : (servant.rarity === 4 ? 'rarity-4' : 'rarity-3');
+                const card = document.createElement('div');
+                card.className = `genshin-card overflow-hidden cursor-pointer group ${selectedServant?.id === servant.id ? 'ring-2 ring-[#cca566]' : ''}`;
+                card.onclick = () => showDetails(servant);
+                
+                const hasVoice = servant.voiceLines && servant.voiceLines.length > 0;
+
+                card.innerHTML = `
+                    <div class="relative h-36 ${bgClass} flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <img src="${servant.image}" class="absolute -right-10 top-0 w-50 h-80 object-contain object-right opacity-20 scale-150">
+                        <span class="text-2xl opacity-25 font-black font-genshin tracking-widest text-white">${(servant.class || 'SERVANT').toUpperCase()}</span>
+                        
+                        ${hasVoice ? `
+                            <span class="absolute top-2 right-2 bg-black/50 text-[#cca566] text-[10px] px-1.5 py-0.5 rounded border border-[#cca566]/40 flex items-center gap-1 backdrop-blur-sm">
+                                🎙️ ${servant.voiceLines.length}
+                            </span>
+                        ` : ''}
+                    </div>
+                    <div class="p-3 bg-[#161c28]/90">
+                        <div class="text-[10px] text-[#cca566] font-semibold uppercase tracking-wider">${servant.class}</div>
+                        <h3 class="font-bold text-white truncate text-xs mt-0.5">${servant.name}</h3>
+                        <div class="star-rating text-[10px] mt-1">${'★'.repeat(servant.rarity || 5)}</div>
+                    </div>
+                `;
+                gridContainer.appendChild(card);
+            });
+        }
+
+        function applyFilters() {
+            const query = searchBar.value.toLowerCase().trim();
+            const cls = classFilter.value;
+
+            const filtered = servantData.filter(s => {
+                const matchesSearch = s.name.toLowerCase().includes(query) || 
+                                      (s.traits && s.traits.some(t => t.toLowerCase().includes(query))) ||
+                                      s.class.toLowerCase().includes(query);
+                
+                let matchesClass = true;
+                if (cls !== 'ALL') {
+                    if (cls === 'Extra') {
+                        matchesClass = !['Saber', 'Archer', 'Lancer', 'Rider', 'Caster', 'Assassin', 'Berserker'].includes(s.class);
+                    } else {
+                        matchesClass = s.class === cls;
+                    }
+                }
+
+                return matchesSearch && matchesClass;
+            });
+
+            renderGrid(filtered);
+        }
+
+        function showDetails(servant) {
+            selectedServant = servant;
+            selectedVoiceIndex = 0;
+            stopAudio();
+
+            emptyState.classList.add('hidden');
+            detailView.classList.remove('hidden');
+
+const jpText = servant.jpName || servant.name;
+document.getElementById('bgJapanShadow').innerHTML = jpText.replace('・', '<br>').replace(' ', '<br>');            
+document.getElementById('bgCharTransparent').style.backgroundImage = servant.image ? `url('${servant.image}')` : 'none';
+
+            renderDetailContent();
+            renderGrid(servantData); // Refresh ring focus
+        }
+
+        function renderDetailContent() {
+            if (!selectedServant) return;
+            const servant = selectedServant;
+            const contentArea = document.getElementById('detailContent');
+
+            const voiceLines = servant.voiceLines || [];
+            const currentVoice = voiceLines[selectedVoiceIndex] || null;
+
+            contentArea.innerHTML = `
+                <!-- Header Info -->
+                <div class="flex justify-between items-start gap-2">
+                    <div>
+                        <span class="bg-[#cca566]/20 text-[#cca566] text-xs px-2.5 py-0.5 rounded border border-[#cca566]/40 font-bold font-genshin tracking-wide">${servant.class.toUpperCase()}</span>
+                        <h2 class="text-xl md:text-2xl font-bold text-white mt-1 font-genshin">${servant.name}</h2>
+                        <div class="star-rating text-xs">${'★'.repeat(servant.rarity || 5)}</div>
+                    </div>
+                    <div class="flex gap-1.5">
+                        <button onclick="openFormModal(${servant.id})" title="Edit Servant" class="bg-gray-800 hover:bg-[#cca566] hover:text-[#0e121e] text-gray-300 text-xs px-2 py-1 rounded transition-colors cursor-pointer border border-gray-700">
+                            ✏️ Edit
+                        </button>
+                        <button onclick="confirmDeleteServant(${servant.id})" title="Delete Servant" class="bg-gray-800 hover:bg-red-600 text-gray-300 hover:text-white text-xs px-2 py-1 rounded transition-colors cursor-pointer border border-gray-700">
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Attributes Grid -->
+                <div class="grid grid-cols-2 gap-y-1 gap-x-3 text-[11px] text-gray-400 bg-black/30 p-2.5 rounded border border-gray-800">
+                    <div>Gender: <span class="text-white font-medium">${servant.gender || '-'}</span></div>
+                    <div>Race: <span class="text-white font-medium">${servant.race || '-'}</span></div>
+                    <div>Artist: <span class="text-white font-medium">${servant.illustrator || '-'}</span></div>
+                    <div>CV: <span class="text-white font-medium">${servant.cv || '-'}</span></div>
+                </div>
+
+                <!-- Combat Stats -->
+                <div class="border-t border-gray-800/80 pt-2">
+                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Combat Statistics</h4>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-black/30 p-2 rounded border border-gray-800">
+                            <span class="text-gray-500 text-[9px] block">MAX ATK</span>
+                            <span class="text-[#e66a6a] font-bold font-genshin">${(servant.stats?.maxAtk || 0).toLocaleString()}</span>
+                        </div>
+                        <div class="bg-black/30 p-2 rounded border border-gray-800">
+                            <span class="text-gray-500 text-[9px] block">MAX HP</span>
+                            <span class="text-[#6ae68e] font-bold font-genshin">${(servant.stats?.maxHp || 0).toLocaleString()}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VOICE OVER AUDIO PLAYER SECTION -->
+                <div class="border-t border-[#cca566]/30 pt-3 bg-black/40 p-3.5 rounded-lg border border-[#cca566]/20 shadow-inner">
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-xs font-bold font-genshin text-[#cca566] flex items-center gap-1.5 tracking-wider">
+                            <span>🎙️</span> VOICE OVER ARCHIVE
+                        </h4>
+                        <span id="audioBadge" class="text-[9px] bg-[#cca566]/20 text-[#cca566] px-2 py-0.5 rounded border border-[#cca566]/30">
+                            ${voiceLines.length > 0 ? `${voiceLines.length} Voice Line(s)` : 'No Voice Recorded'}
+                        </span>
+                    </div>
+
+                    ${voiceLines.length > 0 ? `
+                        <!-- Voice Line Tabs -->
+                        <div class="flex gap-1 overflow-x-auto pb-2 mb-2 scrollbar-none">
+                            ${voiceLines.map((vl, idx) => `
+                                <button onclick="switchVoiceLine(${idx})" class="text-[10px] px-2.5 py-1 rounded whitespace-nowrap transition-all cursor-pointer ${idx === selectedVoiceIndex ? 'bg-[#cca566] text-[#0e121e] font-bold shadow' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}">
+                                    ${vl.title || `Line ${idx + 1}`}
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <!-- Dialogue Text Box -->
+                        <div class="bg-[#121723] p-3 rounded border border-gray-800 mb-3 relative">
+                            <p class="text-xs text-gray-200 italic leading-relaxed font-sans">
+                                "${currentVoice?.text || 'No dialogue transcript.'}"
+                            </p>
+                        </div>
+
+                        <!-- Interactive Audio Controls -->
+                        <div class="flex items-center gap-3">
+                            <button id="playBtn" onclick="togglePlayVoice()" class="w-10 h-10 rounded-full bg-gradient-to-r from-[#cca566] to-[#b59055] hover:from-[#e2be7d] hover:to-[#cca566] text-[#0e121e] flex items-center justify-center font-bold text-base shadow-md cursor-pointer transition-transform active:scale-95 flex-shrink-0">
+                                ▶
+                            </button>
+                            
+                            <div class="flex-1 space-y-1">
+                                <input type="range" id="audioSeek" min="0" max="100" value="0" oninput="seekAudio(this.value)" class="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                                <div class="flex justify-between text-[9px] text-gray-400">
+                                    <span id="audioCurrentTime">0:00</span>
+                                    <span id="audioDuration">0:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    ` : `
+                        <div class="text-center py-4 text-xs text-gray-500">
+                            No voice lines added yet. Click <b>Edit</b> to add voice URLs & transcripts!
+                        </div>
+                    `}
+                </div>
+
+                <!-- Active Skills Section -->
+                <div class="border-t border-gray-800/80 pt-2">
+                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Active Skills</h4>
+                    <div class="space-y-1">
+                        ${(servant.skills || []).map(sk => `
+                            <div class="bg-black/30 p-2 rounded text-xs border border-gray-800/60">
+                                <span class="text-[#cca566] font-bold block text-[11px]">${sk.name || 'Skill'}</span>
+                                <p class="text-gray-400 text-[10px] mt-0.5">${sk.effect || '-'}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- Noble Phantasm -->
+                <div class="border-t border-gray-800/80 pt-2">
+                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Noble Phantasm</h4>
+                    <div class="bg-black/30 p-2 rounded border-l-2 border-[#cca566] text-xs">
+                        <div class="text-white font-bold flex justify-between text-[11px]">
+                            <span>${servant.noblePhantasm?.name || 'Noble Phantasm'}</span>
+                            <span class="text-[#cca566] text-[9px] bg-[#cca566]/10 px-1 rounded">${servant.noblePhantasm?.type || 'Buster'}</span>
+                        </div>
+                        <div class="text-[10px] text-gray-400 mt-0.5">Multiplier: <span class="text-gray-200">${servant.noblePhantasm?.damageStat || '-'}</span></div>
+                    </div>
+                </div>
+
+                <button onclick="toggleLoreModal()" class="w-full bg-[#cca566] hover:bg-[#b59055] text-[#0e121e] font-genshin font-bold tracking-widest text-xs py-2.5 rounded transition-all shadow-md cursor-pointer mt-2">
+                    VIEW LORE & FULL VOICE ARCHIVE
+                </button>
+            `;
+        }
+
+        // Voice Over Audio Playback Logic
+        function switchVoiceLine(index) {
+            selectedVoiceIndex = index;
+            stopAudio();
+            renderDetailContent();
+        }
+
+        function togglePlayVoice() {
+            if (!selectedServant || !selectedServant.voiceLines || !selectedServant.voiceLines[selectedVoiceIndex]) return;
+
+            const voice = selectedServant.voiceLines[selectedVoiceIndex];
+            const playBtn = document.getElementById('playBtn');
+
+            if (isAudioPlaying) {
+                pauseAudio();
+            } else {
+                playAudioLine(voice.audioUrl, voice.text);
+            }
+        }
+
+        function playAudioLine(url, transcriptText) {
+            stopAudio();
+
+            const playBtn = document.getElementById('playBtn');
+            const seekSlider = document.getElementById('audioSeek');
+            const timeText = document.getElementById('audioCurrentTime');
+            const durationText = document.getElementById('audioDuration');
+
+            if (url && url.trim().length > 5) {
+                activeAudio = new Audio(url);
+                activeAudio.play().then(() => {
+                    isAudioPlaying = true;
+                    if (playBtn) playBtn.innerText = '⏸';
+                    
+                    audioProgressTimer = setInterval(() => {
+                        if (activeAudio.duration) {
+                            const pct = (activeAudio.currentTime / activeAudio.duration) * 100;
+                            if (seekSlider) seekSlider.value = pct;
+                            if (timeText) timeText.innerText = formatTime(activeAudio.currentTime);
+                            if (durationText) durationText.innerText = formatTime(activeAudio.duration);
+                        }
+                    }, 200);
+
+                }).catch(err => {
+                    console.warn("Audio file failed to play, using Text-To-Speech fallback.", err);
+                    playSpeechFallback(transcriptText);
+                });
+
+                activeAudio.onended = () => {
+                    stopAudio();
+                };
+
+                activeAudio.onerror = () => {
+                    playSpeechFallback(transcriptText);
+                };
+            } else {
+                // Speech Synthesis Fallback if no audio URL
+                playSpeechFallback(transcriptText);
+            }
+        }
+
+        function playSpeechFallback(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.95;
+                utterance.pitch = 1.0;
+                
+                utterance.onstart = () => {
+                    isAudioPlaying = true;
+                    const playBtn = document.getElementById('playBtn');
+                    if (playBtn) playBtn.innerText = '⏸';
+                    showToast("Playing via Speech Synthesis fallback", "info");
+                };
+
+                utterance.onend = () => {
+                    stopAudio();
+                };
+
+                utterance.onerror = () => {
+                    stopAudio();
+                };
+
+                window.speechSynthesis.speak(utterance);
+            } else {
+                showToast("Cannot play audio or speech synthesis.", "error");
+            }
+        }
+
+        function pauseAudio() {
+            if (activeAudio) activeAudio.pause();
+            if ('speechSynthesis' in window) window.speechSynthesis.pause();
+            isAudioPlaying = false;
+            const playBtn = document.getElementById('playBtn');
+            if (playBtn) playBtn.innerText = '▶';
+            if (audioProgressTimer) clearInterval(audioProgressTimer);
+        }
+
+        function stopAudio() {
+            if (activeAudio) {
+                activeAudio.pause();
+                activeAudio.currentTime = 0;
+            }
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            isAudioPlaying = false;
+            if (audioProgressTimer) clearInterval(audioProgressTimer);
+
+            const playBtn = document.getElementById('playBtn');
+            if (playBtn) playBtn.innerText = '▶';
+            const seekSlider = document.getElementById('audioSeek');
+            if (seekSlider) seekSlider.value = 0;
+            const timeText = document.getElementById('audioCurrentTime');
+            if (timeText) timeText.innerText = '0:00';
+        }
+
+        function seekAudio(val) {
+            if (activeAudio && activeAudio.duration) {
+                activeAudio.currentTime = (val / 100) * activeAudio.duration;
+            }
+        }
+
+        function formatTime(secs) {
+            const m = Math.floor(secs / 60) || 0;
+            const s = Math.floor(secs % 60) || 0;
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function toggleLoreModal() {
+            if (!selectedServant) return;
+            
+            if (loreModal.classList.contains('hidden')) {
+                document.getElementById('modalName').innerText = selectedServant.name;
+                document.getElementById('modalTitleInfo').innerText = `${selectedServant.class} Archive & Audio Logs`;
+                document.getElementById('modalAlignment').innerText = selectedServant.alignment || '-';
+                document.getElementById('modalAttribute').innerText = selectedServant.attribute || '-';
+
+                const traitsBox = document.getElementById('modalTraits');
+                traitsBox.innerHTML = (selectedServant.traits || []).map(t => `<span class="bg-gray-800 text-gray-300 text-[11px] px-2.5 py-0.5 rounded border border-gray-700">${t}</span>`).join('');
+
+                // Lore text
+                const loreBox = document.getElementById('modalLore');
+                loreBox.innerHTML = selectedServant.lore && selectedServant.lore.length > 0
+                    ? selectedServant.lore.map(para => `<p>${para}</p>`).join('')
+                    : `<p>${selectedServant.description || 'No archive description available.'}</p>`;
+
+                // Voice Lines Archive in Lore Modal
+                const voiceArchiveBox = document.getElementById('modalVoiceArchive');
+                const vLines = selectedServant.voiceLines || [];
+
+                if (vLines.length > 0) {
+                    voiceArchiveBox.innerHTML = vLines.map((vl, idx) => `
+                        <div class="flex items-center justify-between gap-3 bg-black/40 p-2.5 rounded border border-gray-800 text-xs">
+                            <div class="flex-1">
+                                <span class="text-[#cca566] font-bold block text-[11px]">${vl.title || `Voice Line ${idx+1}`}</span>
+                                <p class="text-gray-300 italic text-[11px] mt-0.5">"${vl.text}"</p>
+                            </div>
+                            <button onclick="playAudioLine('${vl.audioUrl || ''}', '${vl.text.replace(/'/g, "\\'")}')" class="bg-[#cca566] text-[#0e121e] px-2.5 py-1 rounded text-[10px] font-bold hover:bg-[#e2be7d] cursor-pointer flex-shrink-0">
+                                🔊 Play
+                            </button>
+                        </div>
+                    `).join('');
+                } else {
+                    voiceArchiveBox.innerHTML = `<p class="text-gray-500 text-xs text-center py-2">No voice audio archives recorded.</p>`;
+                }
+
+                loreModal.classList.remove('hidden');
+                setTimeout(() => loreModal.classList.remove('opacity-0'), 10);
+            } else {
+                loreModal.classList.add('opacity-0');
+                setTimeout(() => loreModal.classList.add('hidden'), 300);
+            }
+        }
+
+        // CRUD Form Logic
+        function openFormModal(servantId = null) {
+            stopAudio();
+            const form = document.getElementById('servantForm');
+            form.reset();
+            document.getElementById('voiceLinesContainer').innerHTML = '';
+
+            if (servantId) {
+                const target = servantData.find(s => s.id === servantId);
+                if (!target) return;
+
+                document.getElementById('formModalTitle').innerText = "EDIT SERVANT & VOICE ARCHIVE";
+                document.getElementById('editServantId').value = target.id;
+                document.getElementById('formName').value = target.name || '';
+                document.getElementById('formJpName').value = target.jpName || '';
+                document.getElementById('formClass').value = target.class || 'Saber';
+                document.getElementById('formRarity').value = target.rarity || 5;
+                document.getElementById('formGender').value = target.gender || '';
+                document.getElementById('formMaxAtk').value = target.stats?.maxAtk || '';
+                document.getElementById('formMaxHp').value = target.stats?.maxHp || '';
+                document.getElementById('formIllustrator').value = target.illustrator || '';
+                document.getElementById('formCv').value = target.cv || '';
+                document.getElementById('formAlignment').value = target.alignment || '';
+                document.getElementById('formAttribute').value = target.attribute || '';
+                document.getElementById('formRace').value = target.race || '';
+                document.getElementById('formImage').value = target.image || '';
+
+                // Load Voice Lines
+                if (target.voiceLines && target.voiceLines.length > 0) {
+                    target.voiceLines.forEach(vl => addVoiceLineInputRow(vl.title, vl.audioUrl, vl.text));
+                } else {
+                    addVoiceLineInputRow();
+                }
+
+                // Skills
+                if (target.skills && target.skills[0]) {
+                    document.getElementById('formSkill1Name').value = target.skills[0].name || '';
+                    document.getElementById('formSkill1Effect').value = target.skills[0].effect || '';
+                }
+                if (target.skills && target.skills[1]) {
+                    document.getElementById('formSkill2Name').value = target.skills[1].name || '';
+                    document.getElementById('formSkill2Effect').value = target.skills[1].effect || '';
+                }
+                if (target.skills && target.skills[2]) {
+                    document.getElementById('formSkill3Name').value = target.skills[2].name || '';
+                    document.getElementById('formSkill3Effect').value = target.skills[2].effect || '';
+                }
+
+                // NP
+                document.getElementById('formNpName').value = target.noblePhantasm?.name || '';
+                document.getElementById('formNpType').value = target.noblePhantasm?.type || 'Buster';
+                document.getElementById('formNpDamage').value = target.noblePhantasm?.damageStat || '';
+
+                document.getElementById('formTraits').value = (target.traits || []).join(', ');
+                document.getElementById('formLore').value = (target.lore || []).join('\n');
+            } else {
+                document.getElementById('formModalTitle').innerText = "ADD NEW SERVANT";
+                document.getElementById('editServantId').value = '';
+                addVoiceLineInputRow("Summoning", "", "Servant Saber, answering your summons.");
+            }
+
+            formModal.classList.remove('hidden');
+            setTimeout(() => formModal.classList.remove('opacity-0'), 10);
+        }
+
+        function closeFormModal() {
+            formModal.classList.add('opacity-0');
+            setTimeout(() => formModal.classList.add('hidden'), 300);
+        }
+
+        function addVoiceLineInputRow(title = '', audioUrl = '', text = '') {
+            const container = document.getElementById('voiceLinesContainer');
+            const row = document.createElement('div');
+            row.className = "voice-line-row bg-[#1b2233] p-2.5 rounded border border-gray-700 space-y-2 relative group";
+
+            row.innerHTML = `
+                <div class="flex gap-2">
+                    <input type="text" placeholder="Line Title (e.g. Summoning / NP)" value="${title}" class="vl-title w-1/3 bg-[#121723] text-white border border-gray-700 rounded p-1.5 focus:border-[#cca566] outline-none">
+                    <input type="url" placeholder="Audio URL (MP3/WAV)" value="${audioUrl}" class="vl-url w-2/3 bg-[#121723] text-white border border-gray-700 rounded p-1.5 focus:border-[#cca566] outline-none">
+                    <button type="button" onclick="this.closest('.voice-line-row').remove()" class="text-red-400 hover:text-red-300 font-bold px-2 cursor-pointer">✕</button>
+                </div>
+                <input type="text" placeholder="Dialogue Transcript / Text..." value="${text}" class="vl-text w-full bg-[#121723] text-white border border-gray-700 rounded p-1.5 focus:border-[#cca566] outline-none">
+            `;
+
+            container.appendChild(row);
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const editId = document.getElementById('editServantId').value;
+            const traitsArray = document.getElementById('formTraits').value.split(',').map(t => t.trim()).filter(t => t);
+            const loreArray = document.getElementById('formLore').value.split('\n').filter(l => l.trim());
+
+            // Collect voice lines
+            const vlRows = document.querySelectorAll('.voice-line-row');
+            const voiceLines = [];
+            vlRows.forEach(row => {
+                const title = row.querySelector('.vl-title').value.trim();
+                const audioUrl = row.querySelector('.vl-url').value.trim();
+                const text = row.querySelector('.vl-text').value.trim();
+                if (title || text || audioUrl) {
+                    voiceLines.push({ title: title || 'Dialogue', audioUrl, text: text || '...' });
+                }
+            });
+
+            const newServantObj = {
+                id: editId ? parseInt(editId) : Date.now(),
+                name: document.getElementById('formName').value,
+                jpName: document.getElementById('formJpName').value,
+                class: document.getElementById('formClass').value,
+                rarity: parseInt(document.getElementById('formRarity').value),
+                gender: document.getElementById('formGender').value,
+                race: document.getElementById('formRace').value,
+                illustrator: document.getElementById('formIllustrator').value,
+                cv: document.getElementById('formCv').value,
+                stats: {
+                    maxAtk: parseInt(document.getElementById('formMaxAtk').value) || 0,
+                    maxHp: parseInt(document.getElementById('formMaxHp').value) || 0
+                },
+                alignment: document.getElementById('formAlignment').value,
+                attribute: document.getElementById('formAttribute').value,
+                image: document.getElementById('formImage').value || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500',
+                voiceLines: voiceLines,
+                skills: [
+                    { name: document.getElementById('formSkill1Name').value || 'Skill 1', effect: document.getElementById('formSkill1Effect').value || '-' },
+                    { name: document.getElementById('formSkill2Name').value || 'Skill 2', effect: document.getElementById('formSkill2Effect').value || '-' },
+                    { name: document.getElementById('formSkill3Name').value || 'Skill 3', effect: document.getElementById('formSkill3Effect').value || '-' }
+                ],
+                noblePhantasm: {
+                    name: document.getElementById('formNpName').value || 'Noble Phantasm',
+                    type: document.getElementById('formNpType').value,
+                    damageStat: document.getElementById('formNpDamage').value || '-'
+                },
+                traits: traitsArray,
+                lore: loreArray.length > 0 ? loreArray : [document.getElementById('formName').value + " record archived in Chaldea."]
+            };
+
+            if (editId) {
+                const idx = servantData.findIndex(s => s.id === parseInt(editId));
+                if (idx !== -1) servantData[idx] = newServantObj;
+                showToast("Servant updated successfully!");
+            } else {
+                servantData.unshift(newServantObj);
+                showToast("New Servant registered!");
+            }
+
+            saveServantData();
+            applyFilters();
+            showDetails(newServantObj);
+            closeFormModal();
+        }
+
+        function confirmDeleteServant(id) {
+            showConfirmDialog("DELETE SERVANT", "Are you sure you want to delete this servant from the registry?", () => {
+                servantData = servantData.filter(s => s.id !== id);
+                saveServantData();
+                applyFilters();
+                if (selectedServant && selectedServant.id === id) {
+                    selectedServant = null;
+                    stopAudio();
+                    detailView.classList.add('hidden');
+                    emptyState.classList.remove('hidden');
+                }
+                showToast("Servant deleted.");
+            });
+        }
+
+        function confirmResetData() {
+            showConfirmDialog("RESET DATABASE", "Reset all servant records to initial defaults? All custom changes will be lost.", () => {
+                localStorage.removeItem('fgo_genshin_servants_db_v2');
+                servantData = [...initialServants];
+                selectedServant = null;
+                stopAudio();
+                applyFilters();
+                emptyState.classList.remove('hidden');
+                detailView.classList.add('hidden');
+                showToast("Database reset to defaults.");
+            });
+        }
+
+        // Custom Modal Confirm & Toast Helpers (Replaces alert and confirm)
+        function showConfirmDialog(title, msg, onConfirm) {
+            const modal = document.getElementById('confirmModal');
+            document.getElementById('confirmTitle').innerText = title;
+            document.getElementById('confirmMessage').innerText = msg;
+
+            const okBtn = document.getElementById('confirmOkBtn');
+            const cancelBtn = document.getElementById('confirmCancelBtn');
+
+            const cleanup = () => {
+                modal.classList.add('opacity-0');
+                setTimeout(() => modal.classList.add('hidden'), 200);
+            };
+
+            okBtn.onclick = () => {
+                cleanup();
+                onConfirm();
+            };
+            cancelBtn.onclick = cleanup;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        searchBar.addEventListener('input', applyFilters);
+
+        // App Initialization
+        window.onload = function() {
+            applyFilters();
+            if (servantData.length > 0) {
+                showDetails(servantData[0]);
+            }
+        };
+    </script>
+</body>
+</html>
