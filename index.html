@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FGO Character Wiki - Genshin Style & Voice Over</title>
+    <title>Fate/Domination</title>
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Google Fonts for Genshin-like typography -->
@@ -91,10 +91,10 @@
             <div class="text-center lg:text-left">
                 <div class="flex items-center justify-center lg:justify-start gap-3">
                     <span class="text-3xl text-[#cca566]">✦</span>
-                    <h1 class="text-3xl md:text-4xl font-black tracking-widest text-white font-genshin drop-shadow-md">CHALDEA REGISTRY</h1>
+                    <h1 class="text-3xl md:text-4xl font-black tracking-widest text-white font-genshin drop-shadow-md">FATE/Domination</h1>
                     <span class="text-3xl text-[#cca566]">✦</span>
                 </div>
-                <p class="text-gray-400 text-xs md:text-sm mt-1 tracking-wider">FGO Database & Voice Archive with Teyvat Aesthetics</p>
+                <p class="text-gray-400 text-xs md:text-sm mt-1 tracking-wider">Servant Database</p>
             </div>
             
             <!-- Filter Controls -->
@@ -121,6 +121,13 @@
                 <button onclick="confirmResetData()" title="Reset data to initial state" class="text-xs text-gray-400 hover:text-red-400 underline transition-colors cursor-pointer px-2 py-1">
                     Reset Data
                 </button>
+                <button onclick="exportData()" class="text-xs text-[#cca566] hover:underline px-2 py-1 cursor-pointer">
+                 📥 Export JSON
+                </button>
+                 <label class="text-xs text-[#cca566] hover:underline px-2 py-1 cursor-pointer">
+                   📤 Import JSON
+                   <input type="file" id="importFileInput" onchange="importData(event)" accept=".json" class="hidden">
+            </label>
             </div>
         </header>
 
@@ -142,8 +149,8 @@
             <div class="lg:col-span-1">
                 <div id="detailView" class="genshin-card p-6 sticky top-6 hidden flex flex-col justify-between min-h-[640px] relative overflow-hidden z-10">
                     <!-- Background Elements -->
-                    <div id="bgJapanShadow" class="absolute -left-2 top-8 font-japan text-5xl text-white/10 select-none pointer-events-none z-0"></div>
-                    <div id="bgCharTransparent" class="absolute right-0 bottom-0 w-full h-full bg-cover bg-right-bottom opacity-20 pointer-events-none z-0 transition-all duration-500"></div>
+                    <div id="bgJapanShadow" class="absolute -left-0 top-10 font-japan text-4xl text-white/20 select-none pointer-events-none z-0 leading-tight"></div>
+                    <div id="bgCharTransparent" class="absolute right-0 top-0 w-full h-full bg-contain bg-no-repeat bg-top md:bg-right-top opacity-20 pointer-events-none z-0 transition-all duration-500"></div>
                     
                     <!-- Content Wrapper -->
                     <div id="detailContent" class="relative z-10 space-y-4">
@@ -202,6 +209,15 @@
                     </h4>
                     <div id="modalLore" class="text-xs md:text-sm text-gray-300 space-y-3 leading-relaxed bg-black/20 p-4 rounded-md border border-gray-800/60"></div>
                 </div>
+
+                <div class="pt-4 border-t border-gray-800 flex justify-end gap-3">
+                <button id="modalEditBtn" class="bg-gray-800 hover:bg-[#cca566] hover:text-[#0e121e] text-gray-300 text-xs px-4 py-2 rounded transition-colors cursor-pointer border border-gray-700 font-genshin font-bold flex items-center gap-1.5">
+                    ✏️ Edit Servant
+                </button>
+                <button id="modalDeleteBtn" class="bg-gray-800 hover:bg-red-600 text-gray-300 hover:text-white text-xs px-4 py-2 rounded transition-colors cursor-pointer border border-gray-700 font-genshin font-bold flex items-center gap-1.5">
+                    🗑️ Delete Servant
+                </button>
+             </div>
             </div>
         </div>
     </div>
@@ -538,6 +554,7 @@
                 card.innerHTML = `
                     <div class="relative h-36 ${bgClass} flex items-center justify-center overflow-hidden">
                         <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <img src="${servant.image}" class="absolute -right-10 top-0 w-50 h-80 object-contain object-right opacity-20 scale-150">
                         <span class="text-2xl opacity-25 font-black font-genshin tracking-widest text-white">${(servant.class || 'SERVANT').toUpperCase()}</span>
                         
                         ${hasVoice ? `
@@ -588,8 +605,9 @@
             emptyState.classList.add('hidden');
             detailView.classList.remove('hidden');
 
-            document.getElementById('bgJapanShadow').innerText = servant.jpName || servant.name;
-            document.getElementById('bgCharTransparent').style.backgroundImage = servant.image ? `url('${servant.image}')` : 'none';
+const jpText = servant.jpName || servant.name;
+document.getElementById('bgJapanShadow').innerHTML = jpText.replace('・', '<br>').replace(' ', '<br>');            
+document.getElementById('bgCharTransparent').style.backgroundImage = servant.image ? `url('${servant.image}')` : 'none';
 
             renderDetailContent();
             renderGrid(servantData); // Refresh ring focus
@@ -1121,7 +1139,44 @@
             if (servantData.length > 0) {
                 showDetails(servantData[0]);
             }
-        };
+        }
+
+        // Export data ke file JSON
+function exportData() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(servantData, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", "fgo_servants_backup.json");
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+    showToast("Data berhasil di-export!");
+}
+
+// Import data dari file JSON
+function importData(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importedData = JSON.parse(e.target.result);
+            if (Array.isArray(importedData)) {
+                servantData = importedData;
+                saveServantData();
+                applyFilters();
+                if (servantData.length > 0) showDetails(servantData[0]);
+                showToast("Data berhasil di-import!");
+            } else {
+                showToast("Format file JSON tidak valid.");
+            }
+        } catch (err) {
+            showToast("Gagal membaca file JSON.");
+        }
+    };
+    reader.readAsText(file);
+};
     </script>
 </body>
 </html>
