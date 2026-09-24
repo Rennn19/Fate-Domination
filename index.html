@@ -109,7 +109,16 @@
                         <option value="Caster">Caster</option>
                         <option value="Assassin">Assassin</option>
                         <option value="Berserker">Berserker</option>
-                        <option value="Extra">Extra Classes</option>
+                        <option value="Ruler">Ruler</option>
+                        <option value="Avenger">Avenger</option>
+                        <option value="MoonCancer">MoonCancer</option>
+                        <option value="Shielder">Shielder</option>
+                        <option value="Foreigner">Foreigner</option>
+                        <option value="AlterEgo">AlterEgo</option>
+                        <option value="Pretender">Pretender</option>
+                        <option value="Beast">Beast</option>
+                        <option value="UnBeast">UnBeast</option>                            
+                        <option value="Unknown">Unknown</option>
                     </select>
                 </div>
                 <div class="relative w-full sm:w-60">
@@ -135,7 +144,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
             <!-- Left Side: Character Grid List -->
-            <div class="lg:col-span-2 space-y-4">
+            <div class="lg:col-span-2 space-y-4 lg:max-h-[calc(100vh-170px)] lg:overflow-y-auto lg:pr-2">
                 <div class="flex items-center justify-between px-1 text-xs text-gray-400">
                     <span id="servantCount">Showing Servants</span>
                     <span class="text-[#cca566] font-genshin">SELECT TO INSPECT & LISTEN</span>
@@ -147,7 +156,7 @@
 
             <!-- Right Side: Detailed Showcase View -->
             <div class="lg:col-span-1">
-                <div id="detailView" class="genshin-card p-6 sticky top-6 hidden flex flex-col justify-between min-h-[640px] relative overflow-hidden z-10">
+                <div id="detailView" class="genshin-card p-6 hidden flex flex-col justify-between min-h-[640px] lg:max-h-[calc(100vh-170px)] lg:overflow-y-auto relative z-10">
                     <!-- Background Elements -->
                     <div id="bgJapanShadow" class="absolute -left-0 top-10 font-japan text-4xl text-white/20 select-none pointer-events-none z-0 leading-tight"></div>
                     <div id="bgCharTransparent" class="absolute right-0 top-0 w-full h-full bg-contain bg-no-repeat bg-top md:bg-right-top opacity-20 pointer-events-none z-0 transition-all duration-500"></div>
@@ -158,7 +167,7 @@
                     </div>
                 </div>
                 
-                <div id="emptyState" class="genshin-card p-12 text-center text-gray-500 sticky top-6 flex flex-col items-center justify-center min-h-[640px] gap-3">
+                <div id="emptyState" class="genshin-card p-12 text-center text-gray-500 flex flex-col items-center justify-center min-h-[640px] lg:max-h-[calc(100vh-170px)] gap-3">
                     <div class="w-16 h-16 rounded-full border border-[#cca566]/30 flex items-center justify-center text-[#cca566] text-2xl font-genshin">✦</div>
                     <p class="font-genshin tracking-widest text-sm text-gray-400">SELECT A SERVANT TO VIEW ARCHIVE & LISTEN TO VOICE LINES</p>
                 </div>
@@ -258,9 +267,13 @@
                             <option value="Ruler">Ruler</option>
                             <option value="Avenger">Avenger</option>
                             <option value="MoonCancer">MoonCancer</option>
+                            <option value="Shielder">Shielder</option>
                             <option value="Foreigner">Foreigner</option>
+                            <option value="AlterEgo">AlterEgo</option>
                             <option value="Pretender">Pretender</option>
                             <option value="Beast">Beast</option>
+                            <option value="UnBeast">UnBeast</option> 
+                            <option value="Unknown">Unknown</option>
                         </select>
                     </div>
                 </div>
@@ -555,7 +568,9 @@
                     <div class="relative h-36 ${bgClass} flex items-center justify-center overflow-hidden">
                         <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         <img src="${servant.image}" class="absolute -right-10 top-0 w-50 h-80 object-contain object-right opacity-20 scale-150">
-                        <span class="text-2xl opacity-25 font-black font-genshin tracking-widest text-white">${(servant.class || 'SERVANT').toUpperCase()}</span>
+                        <img src="${classIcons[servant.class] || `assets/icons/${servant.class.toLowerCase()}.svg`}" 
+                        alt="${servant.class}" 
+                        class="w-20 h-20 object-contain opacity-30 filter drop-shadow-md pointer-events-none select-none">
                         
                         ${hasVoice ? `
                             <span class="absolute top-2 right-2 bg-black/50 text-[#cca566] text-[10px] px-1.5 py-0.5 rounded border border-[#cca566]/40 flex items-center gap-1 backdrop-blur-sm">
@@ -585,7 +600,7 @@
                 let matchesClass = true;
                 if (cls !== 'ALL') {
                     if (cls === 'Extra') {
-                        matchesClass = !['Saber', 'Archer', 'Lancer', 'Rider', 'Caster', 'Assassin', 'Berserker'].includes(s.class);
+                        matchesClass = !['Saber', 'Archer', 'Lancer', 'Rider', 'Caster', 'Assassin', 'Berserker', 'Ruler', 'Avenger', 'MoonCancer', 'Shielder', 'Foreigner', 'AlterEgo', 'Pretender', 'Beast', 'UnBeast', 'Unknown'].includes(s.class);
                     } else {
                         matchesClass = s.class === cls;
                     }
@@ -641,15 +656,15 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
 
                 <!-- Attributes Grid -->
                 <div class="grid grid-cols-2 gap-y-1 gap-x-3 text-[11px] text-gray-400 bg-black/30 p-2.5 rounded border border-gray-800">
-                    <div>Gender: <span class="text-white font-medium">${servant.gender || '-'}</span></div>
-                    <div>Race: <span class="text-white font-medium">${servant.race || '-'}</span></div>
-                    <div>Artist: <span class="text-white font-medium">${servant.illustrator || '-'}</span></div>
-                    <div>CV: <span class="text-white font-medium">${servant.cv || '-'}</span></div>
+                    <div>Gender: <span class="text-white font-medium">${servant.gender || 'Unknown'}</span></div>
+                    <div>Race: <span class="text-white font-medium">${servant.race || 'Unknown'}</span></div>
+                    <div>Artist: <span class="text-white font-medium">${servant.illustrator || 'Unknown'}</span></div>
+                    <div>CV: <span class="text-white font-medium">${servant.cv || 'Unknown'}</span></div>
                 </div>
 
                 <!-- Combat Stats -->
                 <div class="border-t border-gray-800/80 pt-2">
-                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Combat Statistics</h4>
+                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Statistics</h4>
                     <div class="grid grid-cols-2 gap-2 text-xs">
                         <div class="bg-black/30 p-2 rounded border border-gray-800">
                             <span class="text-gray-500 text-[9px] block">MAX ATK</span>
@@ -666,7 +681,7 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
                 <div class="border-t border-[#cca566]/30 pt-3 bg-black/40 p-3.5 rounded-lg border border-[#cca566]/20 shadow-inner">
                     <div class="flex items-center justify-between mb-2">
                         <h4 class="text-xs font-bold font-genshin text-[#cca566] flex items-center gap-1.5 tracking-wider">
-                            <span>🎙️</span> VOICE OVER ARCHIVE
+                            <span>🎙️</span> VOICE OVER
                         </h4>
                         <span id="audioBadge" class="text-[9px] bg-[#cca566]/20 text-[#cca566] px-2 py-0.5 rounded border border-[#cca566]/30">
                             ${voiceLines.length > 0 ? `${voiceLines.length} Voice Line(s)` : 'No Voice Recorded'}
@@ -876,7 +891,7 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
             
             if (loreModal.classList.contains('hidden')) {
                 document.getElementById('modalName').innerText = selectedServant.name;
-                document.getElementById('modalTitleInfo').innerText = `${selectedServant.class} Archive & Audio Logs`;
+                document.getElementById('modalTitleInfo').innerText = `${selectedServant.class} Details`;
                 document.getElementById('modalAlignment').innerText = selectedServant.alignment || '-';
                 document.getElementById('modalAttribute').innerText = selectedServant.attribute || '-';
 
@@ -1176,6 +1191,27 @@ function importData(event) {
         }
     };
     reader.readAsText(file);
+}
+
+// Map nama Class ke path file SVG kamu
+const classIcons = {
+    "Saber": "assets/icons/saber.svg",
+    "Archer": "assets/icons/archer.svg",
+    "Lancer": "assets/icons/lancer.svg",
+    "Rider": "assets/icons/rider.svg",
+    "Caster": "assets/icons/caster.svg",
+    "Assassin": "assets/icons/assassin.svg",
+    "Berserker": "assets/icons/berserker.svg",
+    "Ruler": "assets/icons/ruler.svg",
+    "Avenger": "assets/icons/avenger.svg",
+    "MoonCancer": "assets/icons/mooncancer.svg",
+    "Shielder": "assets/icons/shielder.svg",
+    "Foreigner": "assets/icons/foreigner.svg",
+    "AlterEgo": "assets/icons/alterego.svg",
+    "Pretender": "assets/icons/pretender.svg",
+    "Beast": "assets/icons/beast.svg",
+    "UnBeast": "assets/icons/unbeast.svg",
+    "Unknown": "assets/icons/unknown.svg"
 };
     </script>
 </body>
