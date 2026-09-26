@@ -1,8 +1,224 @@
 [
   {
+    "id": 1790184238462,
+    "name": "Draco",
+    "jpName": "ドラコー",
+    "class": "Beast",
+    "rarity": 5,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790183170/draco_fnahke.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "https://res.cloudinary.com/mtns8net/video/upload/v1790188086/S377_Stage1-2_Summon_xmk40r.ogg",
+        "text": "My name is Draco. I am Sodom's Beast, Draco. Umu...ah, yes, that's correct. My class is Beast. Fufu...hahahahaha! This is a hoot! You have truly hit the jackpot!"
+      },
+      {
+        "title": "Noble Phantasm",
+        "audioUrl": "https://res.cloudinary.com/mtns8net/video/upload/v1790188258/S377_Stage3_NP1_jovymy.ogg",
+        "text": "Calamity comes from the sea... Behold. This is the answer to your prosperity. It is the twinkling of a meteor that slashes across the sky of desire! Babalon Domus Aurea!"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "Draco record archived in Chaldea."
+    ]
+  },
+  {
+    "id": 1790184147341,
+    "name": "Dante Alighieri",
+    "jpName": "ダンテ・アリギエーリ",
+    "class": "Pretender",
+    "rarity": 5,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790183153/Dante_Alighieri_rxbsef.png",
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "https://res.cloudinary.com/mtns8net/video/upload/v1790188571/S437_Stage1-2_Summon_nzhz6f.ogg",
+        "text": "A summons… a summons? Hehe… well done, summoning me… My name is Dante Alighieri… As you know, I am the author of the Divine Comedy… As a Pretender, I am also the main character of the Divine Comedy… Hehe… in summary… I look forward to your continued support…"
+      },
+      {
+        "title": "Noble Phantasm",
+        "audioUrl": "https://res.cloudinary.com/mtns8net/video/upload/v1790188574/S437_Stage3_NP2_tpih0z.ogg",
+        "text": "Ah, the seat of God has vanished—all that remains is this gate to Hell! Don’t look, don’t look! Worms bore through the brain; Hell begins its march! “Lasciate ogne speranza, voi ch'intrate!”"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "Dante Alighieri record archived in Chaldea."
+    ]
+  },
+  {
+    "id": 1790184070821,
+    "name": "Jacques de Molay",
+    "jpName": "ジャック・ド・モレー",
+    "class": "Foreigner",
+    "rarity": 5,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790183144/Jacques_de_Molay_sblvrx.png",
+    "activeSpriteIndex": 0,
+    "sprites": [
+      {
+        "name": "Stage 1",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790183144/Jacques_de_Molay_sblvrx.png"
+      }
+    ],
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "",
+        "text": "Servant Saber, answering your summons."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "Jacques de Molay record archived in Chaldea."
+    ]
+  },
+  {
+    "id": 1790183944280,
+    "name": "Xu Fu",
+    "jpName": "徐福",
+    "class": "AlterEgo",
+    "rarity": 3,
+    "gender": "",
+    "race": "",
+    "illustrator": "",
+    "cv": "",
+    "stats": {
+      "maxAtk": 0,
+      "maxHp": 0
+    },
+    "alignment": "",
+    "attribute": "",
+    "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790183139/Xu_Fu_hkhxnv.png",
+    "activeSpriteIndex": 0,
+    "sprites": [
+      {
+        "name": "Stage 1",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790183139/Xu_Fu_hkhxnv.png"
+      }
+    ],
+    "voiceLines": [
+      {
+        "title": "Summoning",
+        "audioUrl": "",
+        "text": "Servant Saber, answering your summons."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Skill 1",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 2",
+        "effect": "-"
+      },
+      {
+        "name": "Skill 3",
+        "effect": "-"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "Noble Phantasm",
+      "type": "Buster",
+      "damageStat": "-"
+    },
+    "traits": [],
+    "lore": [
+      "Xu Fu record archived in Chaldea."
+    ]
+  },
+  {
     "id": 1790103193704,
-    "name": "a",
-    "jpName": "",
+    "name": "Archetype: Earth",
+    "jpName": "アーキタイプ: アース",
     "class": "MoonCancer",
     "rarity": 5,
     "gender": "",
@@ -49,8 +265,8 @@
   },
   {
     "id": 1790103169497,
-    "name": "m",
-    "jpName": "",
+    "name": "James Moriarty",
+    "jpName": "ジェームズ・モリアーティ",
     "class": "Ruler",
     "rarity": 5,
     "gender": "",
@@ -97,8 +313,8 @@
   },
   {
     "id": 1790102878835,
-    "name": "n",
-    "jpName": "",
+    "name": "Noah",
+    "jpName": "ノア",
     "class": "Rider",
     "rarity": 5,
     "gender": "",
@@ -145,8 +361,8 @@
   },
   {
     "id": 1790102864059,
-    "name": "v",
-    "jpName": "",
+    "name": "Vritra",
+    "jpName": "ヴリトラ",
     "class": "Lancer",
     "rarity": 5,
     "gender": "",
@@ -193,8 +409,8 @@
   },
   {
     "id": 1790102847818,
-    "name": "l",
-    "jpName": "",
+    "name": "Lilith",
+    "jpName": "リリス",
     "class": "Berserker",
     "rarity": 5,
     "gender": "",
@@ -241,8 +457,8 @@
   },
   {
     "id": 1790102816065,
-    "name": "t",
-    "jpName": "",
+    "name": "Tezcatlipoca",
+    "jpName": "テスカトリポカ",
     "class": "Assassin",
     "rarity": 5,
     "gender": "",
@@ -289,8 +505,8 @@
   },
   {
     "id": 1790102698645,
-    "name": "a",
-    "jpName": "",
+    "name": "Anastasia",
+    "jpName": "アナスタシア",
     "class": "Caster",
     "rarity": 5,
     "gender": "",
@@ -337,8 +553,8 @@
   },
   {
     "id": 1790102673362,
-    "name": "b",
-    "jpName": "",
+    "name": "Baobhan Sith",
+    "jpName": "バーヴァン・シー",
     "class": "Archer",
     "rarity": 4,
     "gender": "",
@@ -385,8 +601,8 @@
   },
   {
     "id": 1790091711709,
-    "name": "e",
-    "jpName": "g g g",
+    "name": "Miyamoto Musashi",
+    "jpName": "宮本武蔵",
     "class": "Saber",
     "rarity": 5,
     "gender": "",
@@ -400,6 +616,41 @@
     "alignment": "",
     "attribute": "",
     "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790100658/musashi_oarxyg.png",
+    "activeSpriteIndex": 2,
+    "sprites": [
+      {
+        "name": "Default",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790100658/musashi_oarxyg.png"
+      },
+      {
+        "name": "Casual",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790365665/skin_1_musashi_lm3vjs.png"
+      },
+      {
+        "name": "Grand Saber",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790370374/skin_3_musashi_v41xii.png"
+      },
+      {
+        "name": "Grand Saber (Alter)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790370370/skin_2_musashi_tr2pta.png"
+      },
+      {
+        "name": "Academy",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790373044/Academy_t7tphi.png"
+      },
+      {
+        "name": "Stellar",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790373056/Stellar_sabjzt.png"
+      },
+      {
+        "name": "Travel Journal",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790373064/Travel_Journal_a1zyaq.png"
+      },
+      {
+        "name": "Shinmen Musashi",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790373068/Shinmen_Musashi_no_Kami_Fujiwara_no_Harunobu_z7awpg.png"
+      }
+    ],
     "voiceLines": [
       {
         "title": "Summoning",
@@ -433,8 +684,8 @@
   },
   {
     "id": 1790091034178,
-    "name": "a",
-    "jpName": "",
+    "name": "Oda Nobunaga",
+    "jpName": "織田信長",
     "class": "Avenger",
     "rarity": 5,
     "gender": "",
@@ -448,6 +699,25 @@
     "alignment": "",
     "attribute": "",
     "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790100409/Oda_Nobunaga_yf1lqh.png",
+    "activeSpriteIndex": 3,
+    "sprites": [
+      {
+        "name": "Default",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790100409/Oda_Nobunaga_yf1lqh.png"
+      },
+      {
+        "name": "Casual",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790365310/Skin_1_Oda_Nobunaga_ucbzun.png"
+      },
+      {
+        "name": "Oda Kipposhi",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790373777/Oda_Kipposhiking_nhocm8.png"
+      },
+      {
+        "name": "Demon King",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790373769/Demon_king_seys4a.png"
+      }
+    ],
     "voiceLines": [
       {
         "title": "Summoning",
@@ -496,6 +766,109 @@
     "alignment": "Lawful Good",
     "attribute": "Earth",
     "image": "https://res.cloudinary.com/mtns8net/image/upload/v1790099834/Artoria_a6rdbn.png",
+    "activeSpriteIndex": 24,
+    "sprites": [
+      {
+        "name": "Default",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790099834/Artoria_a6rdbn.png"
+      },
+      {
+        "name": "Casual",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407789/Casual_Artoria_vkllo7.png"
+      },
+      {
+        "name": "Formal",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407716/Formal_Artoria_nga0sm.png"
+      },
+      {
+        "name": "Gown",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407964/Dress_Artoria_ewbgc0.png"
+      },
+      {
+        "name": "Alter",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407722/Alter_Artoria_xoz0ri.png"
+      },
+      {
+        "name": "Gown (Alter)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407728/Gown_Alter_Artoria_1_x73has.png"
+      },
+      {
+        "name": "Shinjuku Casual (Alter)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407735/Shinjuku_Alter_Artoria_lne3ai.png"
+      },
+      {
+        "name": "Santa (Alter)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407770/Santa_Alter_Artoria_rtw6po.png"
+      },
+      {
+        "name": "Travel (Alter)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407832/Travel_Alter_Artoria_w92fsj.png"
+      },
+      {
+        "name": "Academy (Alter)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407877/Academy_Alter_Artoria_dlctlt.png"
+      },
+      {
+        "name": "Nightgown (Alter)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407766/Nightgown_Alter_Artoria_teivhc.png"
+      },
+      {
+        "name": "Summer (Alter)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407733/Summer_Alter_Artoria_rd8ezz.png"
+      },
+      {
+        "name": "Summer",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407792/Summer_Artoria_iq4n71.png"
+      },
+      {
+        "name": "Lily",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407937/Lily_Artoria_oi7byd.png"
+      },
+      {
+        "name": "Lion King",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790408571/Lion_King_Artoria_uzzfr6.png"
+      },
+      {
+        "name": "Bride (Lion King)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407788/Bride_Lion_King_Artoria_sm8mxt.png"
+      },
+      {
+        "name": "Formal (Lion King)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407756/Formal_Lion_King_Artoria_p4ypyt.png"
+      },
+      {
+        "name": "Bunny Girl (Lion King)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407751/Bunny_Girl_Lion_King_Artoria_xexzsn.png"
+      },
+      {
+        "name": "Lion King (Alter)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790408045/Alter_Lion_King_Artoria_h4fosm.png"
+      },
+      {
+        "name": "Casual Lion King (Alter)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407745/Kasual_Alter_Lion_King_Artoria_yih3jn.png"
+      },
+      {
+        "name": "Artoria Avalon",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407971/Artoria_Avalon_hcawcg.png"
+      },
+      {
+        "name": "Aesc (Artoria Avalon)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407723/Aesc_Artoria_Avalon_ezhmzp.png"
+      },
+      {
+        "name": "Summer (Artoria Avalon)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407789/Summer_Artoria_Avalon_n6cchq.png"
+      },
+      {
+        "name": "Lord Logres",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407810/Lord_Logres_scrpso.png"
+      },
+      {
+        "name": "Bride (Lord Logres)",
+        "url": "https://res.cloudinary.com/mtns8net/image/upload/v1790407909/Bride_Lord_Logres_d2unll.png"
+      }
+    ],
     "voiceLines": [
       {
         "title": "Summoning",
