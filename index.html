@@ -48,10 +48,16 @@
             background: linear-gradient(180deg, #513e6b, #bfa054); 
         }
         .rarity-4 { 
-            background: linear-gradient(180deg, #3d3b64 0%, #686497 50%, #958cb8 100%); 
+            background: linear-gradient(180deg, #64553b 0%, #bfa054 50%, #b8ac8c 100%); 
         }
         .rarity-3 { 
-            background: linear-gradient(180deg, #2b4b5e 0%, #4c7b98 100%); 
+            background: linear-gradient(180deg, #b5b5b5 0%, #64696f 100%); 
+        }
+        .rarity-2 { 
+            background: linear-gradient(180deg, #403125 0%, #765d5d  100%); 
+        }
+        .rarity-1 { 
+            background: linear-gradient(180deg, #261d0f 0%, #433529 100%); 
         }
 
         /* Custom Audio Slider & Scrollbars */
@@ -147,7 +153,7 @@
             <div class="lg:col-span-2 space-y-4 lg:max-h-[calc(100vh-170px)] lg:overflow-y-auto lg:pr-2">
                 <div class="flex items-center justify-between px-1 text-xs text-gray-400">
                     <span id="servantCount">Showing Servants</span>
-                    <span class="text-[#cca566] font-genshin">SELECT TO INSPECT & LISTEN</span>
+                    <span class="text-[#cca566] font-genshin">SELECT TO SEE DETAILS</span>
                 </div>
                 <div id="characterGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                     <!-- Cards injected by JS -->
@@ -220,13 +226,13 @@
                 </div>
 
                 <div class="pt-4 border-t border-gray-800 flex justify-end gap-3">
-                <button id="modalEditBtn" class="bg-gray-800 hover:bg-[#cca566] hover:text-[#0e121e] text-gray-300 text-xs px-4 py-2 rounded transition-colors cursor-pointer border border-gray-700 font-genshin font-bold flex items-center gap-1.5">
-                    ✏️ Edit Servant
-                </button>
-                <button id="modalDeleteBtn" class="bg-gray-800 hover:bg-red-600 text-gray-300 hover:text-white text-xs px-4 py-2 rounded transition-colors cursor-pointer border border-gray-700 font-genshin font-bold flex items-center gap-1.5">
-                    🗑️ Delete Servant
-                </button>
-             </div>
+                    <button id="modalEditBtn" class="bg-gray-800 hover:bg-[#cca566] hover:text-[#0e121e] text-gray-300 text-xs px-4 py-2 rounded transition-colors cursor-pointer border border-gray-700 font-genshin font-bold flex items-center gap-1.5">
+                        ✏️ Edit Servant
+                    </button>
+                    <button id="modalDeleteBtn" class="bg-gray-800 hover:bg-red-600 text-gray-300 hover:text-white text-xs px-4 py-2 rounded transition-colors cursor-pointer border border-gray-700 font-genshin font-bold flex items-center gap-1.5">
+                        🗑️ Delete Servant
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -330,8 +336,25 @@
                 </div>
 
                 <div>
-                    <label class="block text-gray-400 mb-1">Image URL (Transparent PNG recommended)</label>
+                    <label class="block text-gray-400 mb-1">Default Thumbnail Image URL</label>
                     <input type="url" id="formImage" placeholder="https://..." class="w-full bg-[#1b2233] text-white border border-gray-700 rounded p-2 focus:border-[#cca566] outline-none">
+                </div>
+
+                <!-- SPRITES & ASCENSIONS SECTION -->
+                <div class="border-t border-[#cca566]/30 pt-3 bg-black/20 p-3 rounded-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-[#cca566] font-genshin font-bold text-xs flex items-center gap-1.5">
+                            <span>🖼️</span> SERVANT SPRITES / ASCENSIONS
+                        </label>
+                        <button type="button" onclick="addSpriteInputRow()" class="text-[11px] bg-[#cca566]/20 hover:bg-[#cca566]/40 text-[#cca566] border border-[#cca566]/40 px-2.5 py-1 rounded transition-colors cursor-pointer">
+                            + Add Sprite / Skin
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-gray-400 mb-3">Tambahkan URL gambar sprite/skin (Sprite pertama akan dipakai sebagai thumbnail default jika belum ada skin aktif).</p>
+        
+                    <div id="spritesContainer" class="space-y-2">
+                        <!-- Dynamic Sprite Inputs Injected Here -->
+                    </div>
                 </div>
 
                 <!-- Voice Over Audio Lines Input Section -->
@@ -433,6 +456,7 @@
                 "race": "Human / Dragon",
                 "illustrator": "Takashi Takeuchi",
                 "cv": "Ayako Kawasumi",
+                "activeSpriteIndex": 0,
                 "skills": [
                     { "name": "Charisma A", "effect": "Increases ATK for all allies (3 turns)." },
                     { "name": "Mana Burst A", "effect": "Increases Buster Performance for yourself (1 turn)." },
@@ -450,10 +474,13 @@
                 "traits": ["Dragon", "Female", "Humanoid", "King", "Riding", "Arthur"],
                 "description": "The legendary King of Knights who pulled the sword from the stone.",
                 "lore": [
-                    "The legendary King of Knights who pulled the sword from the stone and united ancient Britain.",
+                    "The legendary King of Knights who pulled the stone from the sword and united ancient Britain.",
                     "Holder of the Holy Sword Excalibur, she wields the light of hope to protect mankind."
                 ],
                 "image": "https://upload.wikimedia.org/wikipedia/en/f/fa/SaberFateGrandOrder.png",
+                "sprites": [
+                    { "name": "Stage 1", "url": "https://upload.wikimedia.org/wikipedia/en/f/fa/SaberFateGrandOrder.png" }
+                ],
                 "voiceLines": [
                     {
                         "title": "Summoning",
@@ -477,6 +504,7 @@
                 "race": "Demigod",
                 "illustrator": "Takashi Takeuchi",
                 "cv": "Tomokazu Seki",
+                "activeSpriteIndex": 0,
                 "skills": [
                     { "name": "Charisma A+", "effect": "Greatly increases ATK for all allies (3 turns)." },
                     { "name": "Golden Rule A", "effect": "Increases own NP Generation Rate (3 turns)." },
@@ -498,6 +526,9 @@
                     "Possesses the originals of all Noble Phantasms stored inside the Gate of Babylon."
                 ],
                 "image": "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500",
+                "sprites": [
+                    { "name": "Stage 1", "url": "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500" }
+                ],
                 "voiceLines": [
                     {
                         "title": "Summoning",
@@ -512,6 +543,27 @@
                 ]
             }
         ];
+
+        // Map nama Class ke path file SVG
+        const classIcons = {
+            "Saber": "assets/icons/saber.svg",
+            "Archer": "assets/icons/archer.svg",
+            "Lancer": "assets/icons/lancer.svg",
+            "Rider": "assets/icons/rider.svg",
+            "Caster": "assets/icons/caster.svg",
+            "Assassin": "assets/icons/assassin.svg",
+            "Berserker": "assets/icons/berserker.svg",
+            "Ruler": "assets/icons/ruler.svg",
+            "Avenger": "assets/icons/avenger.svg",
+            "MoonCancer": "assets/icons/mooncancer.svg",
+            "Shielder": "assets/icons/shielder.svg",
+            "Foreigner": "assets/icons/foreigner.svg",
+            "AlterEgo": "assets/icons/alterego.svg",
+            "Pretender": "assets/icons/pretender.svg",
+            "Beast": "assets/icons/beast.svg",
+            "UnBeast": "assets/icons/unbeast.svg",
+            "Unknown": "assets/icons/unknown.svg"
+        };
 
         function loadServantData() {
             const stored = localStorage.getItem('fgo_genshin_servants_db_v2');
@@ -528,6 +580,7 @@
         let servantData = loadServantData();
         let selectedServant = null;
         let selectedVoiceIndex = 0;
+        let selectedSpriteIndex = 0;
 
         // Global Audio Controller Instance
         let activeAudio = new Audio();
@@ -557,20 +610,24 @@
             }
 
             data.forEach(servant => {
-                const bgClass = servant.rarity >= 5 ? 'rarity-5' : (servant.rarity === 4 ? 'rarity-4' : 'rarity-3');
+                const bgClass = servant.rarity >= 5 ? 'rarity-5' : (servant.rarity === 4 ? 'rarity-4' : servant.rarity === 3 ? 'rarity-3' : servant.rarity === 2 ? 'rarity-2' : 'rarity-1');
                 const card = document.createElement('div');
                 card.className = `genshin-card overflow-hidden cursor-pointer group ${selectedServant?.id === servant.id ? 'ring-2 ring-[#cca566]' : ''}`;
                 card.onclick = () => showDetails(servant);
                 
                 const hasVoice = servant.voiceLines && servant.voiceLines.length > 0;
+                
+                // Gunakan gambar skin yang aktif/equipped
+                const activeIndex = servant.activeSpriteIndex || 0;
+                const cardThumb = (servant.sprites && servant.sprites[activeIndex]?.url) || servant.image;
 
                 card.innerHTML = `
                     <div class="relative h-36 ${bgClass} flex items-center justify-center overflow-hidden">
                         <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <img src="${servant.image}" class="absolute -right-10 top-0 w-50 h-80 object-contain object-right opacity-20 scale-150">
+                        <img src="${cardThumb}" class="absolute -right-10 top-0 w-50 h-80 object-contain object-right opacity-20 scale-150 transition-all duration-300">
                         <img src="${classIcons[servant.class] || `assets/icons/${servant.class.toLowerCase()}.svg`}" 
-                        alt="${servant.class}" 
-                        class="w-20 h-20 object-contain opacity-30 filter drop-shadow-md pointer-events-none select-none">
+                             alt="${servant.class}" 
+                             class="w-20 h-20 object-contain opacity-30 filter drop-shadow-md pointer-events-none select-none">
                         
                         ${hasVoice ? `
                             <span class="absolute top-2 right-2 bg-black/50 text-[#cca566] text-[10px] px-1.5 py-0.5 rounded border border-[#cca566]/40 flex items-center gap-1 backdrop-blur-sm">
@@ -612,20 +669,57 @@
             renderGrid(filtered);
         }
 
+        function getServantSprites(servant) {
+            if (servant.sprites && servant.sprites.length > 0) {
+                return servant.sprites;
+            }
+            return [{ name: "Default", url: servant.image || "" }];
+        }
+
+        // FUNGSI GANTI & EQUIP SKIN PERSISTEN
+        function changeServantSprite(index) {
+            if (!selectedServant) return;
+            const sprites = getServantSprites(selectedServant);
+            if (!sprites[index]) return;
+
+            selectedSpriteIndex = index;
+            selectedServant.activeSpriteIndex = index; // Simpan skin terpilih di Servant
+
+            saveServantData(); // Simpan ke LocalStorage agar tidak reset
+
+            const spriteUrl = sprites[index].url;
+            const bgChar = document.getElementById('bgCharTransparent');
+            if (bgChar) {
+                bgChar.style.backgroundImage = spriteUrl ? `url('${spriteUrl}')` : 'none';
+            }
+
+            showToast(`Skin "${sprites[index].name || 'Stage ' + (index + 1)}" Equipped!`);
+
+            // Refresh UI detail & grid list agar thumbnail di kiri langsung terupdate
+            renderDetailContent();
+            applyFilters();
+        }
+
         function showDetails(servant) {
             selectedServant = servant;
             selectedVoiceIndex = 0;
+            
+            // Mengambil skin yang sedang dipakai, bukan reset ke 0
+            selectedSpriteIndex = servant.activeSpriteIndex || 0; 
             stopAudio();
 
             emptyState.classList.add('hidden');
             detailView.classList.remove('hidden');
 
-const jpText = servant.jpName || servant.name;
-document.getElementById('bgJapanShadow').innerHTML = jpText.replace('・', '<br>').replace(' ', '<br>');            
-document.getElementById('bgCharTransparent').style.backgroundImage = servant.image ? `url('${servant.image}')` : 'none';
+            const jpText = servant.jpName || servant.name;
+            document.getElementById('bgJapanShadow').innerHTML = jpText.replace('・', '<br>').replace(' ', '<br>');            
+            
+            const sprites = getServantSprites(servant);
+            const activeSpriteUrl = sprites[selectedSpriteIndex]?.url || servant.image;
+            document.getElementById('bgCharTransparent').style.backgroundImage = activeSpriteUrl ? `url('${activeSpriteUrl}')` : 'none';
 
             renderDetailContent();
-            renderGrid(servantData); // Refresh ring focus
+            renderGrid(servantData);
         }
 
         function renderDetailContent() {
@@ -635,6 +729,7 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
 
             const voiceLines = servant.voiceLines || [];
             const currentVoice = voiceLines[selectedVoiceIndex] || null;
+            const sprites = getServantSprites(servant);
 
             contentArea.innerHTML = `
                 <!-- Header Info -->
@@ -653,6 +748,23 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
                         </button>
                     </div>
                 </div>
+
+                <!-- SPRITE / SKIN SWITCHER TABS -->
+                ${sprites.length > 1 ? `
+                    <div class="border-t border-b border-gray-800 py-2 my-2">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[10px] text-[#cca566] font-bold block">🎭 SELECT / EQUIP SKIN:</span>
+                        </div>
+                        <div class="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+                            ${sprites.map((s, idx) => `
+                                <button onclick="changeServantSprite(${idx})" class="text-[10px] px-2.5 py-1 rounded transition-all cursor-pointer border flex items-center gap-1 ${idx === selectedSpriteIndex ? 'bg-[#cca566] text-[#0e121e] font-bold border-[#cca566] shadow' : 'bg-black/40 text-gray-300 border-gray-700 hover:bg-gray-800'}">
+                                    <span>${s.name || `Stage ${idx + 1}`}</span>
+                                    ${idx === selectedSpriteIndex ? '<span class="text-[9px] bg-black/20 px-1 rounded">[USED]</span>' : ''}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
 
                 <!-- Attributes Grid -->
                 <div class="grid grid-cols-2 gap-y-1 gap-x-3 text-[11px] text-gray-400 bg-black/30 p-2.5 rounded border border-gray-800">
@@ -768,8 +880,6 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
             if (!selectedServant || !selectedServant.voiceLines || !selectedServant.voiceLines[selectedVoiceIndex]) return;
 
             const voice = selectedServant.voiceLines[selectedVoiceIndex];
-            const playBtn = document.getElementById('playBtn');
-
             if (isAudioPlaying) {
                 pauseAudio();
             } else {
@@ -805,15 +915,9 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
                     playSpeechFallback(transcriptText);
                 });
 
-                activeAudio.onended = () => {
-                    stopAudio();
-                };
-
-                activeAudio.onerror = () => {
-                    playSpeechFallback(transcriptText);
-                };
+                activeAudio.onended = () => { stopAudio(); };
+                activeAudio.onerror = () => { playSpeechFallback(transcriptText); };
             } else {
-                // Speech Synthesis Fallback if no audio URL
                 playSpeechFallback(transcriptText);
             }
         }
@@ -829,20 +933,15 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
                     isAudioPlaying = true;
                     const playBtn = document.getElementById('playBtn');
                     if (playBtn) playBtn.innerText = '⏸';
-                    showToast("Playing via Speech Synthesis fallback", "info");
+                    showToast("Playing via Speech Synthesis fallback");
                 };
 
-                utterance.onend = () => {
-                    stopAudio();
-                };
-
-                utterance.onerror = () => {
-                    stopAudio();
-                };
+                utterance.onend = () => { stopAudio(); };
+                utterance.onerror = () => { stopAudio(); };
 
                 window.speechSynthesis.speak(utterance);
             } else {
-                showToast("Cannot play audio or speech synthesis.", "error");
+                showToast("Cannot play audio or speech synthesis.");
             }
         }
 
@@ -860,9 +959,7 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
                 activeAudio.pause();
                 activeAudio.currentTime = 0;
             }
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
             isAudioPlaying = false;
             if (audioProgressTimer) clearInterval(audioProgressTimer);
 
@@ -898,13 +995,11 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
                 const traitsBox = document.getElementById('modalTraits');
                 traitsBox.innerHTML = (selectedServant.traits || []).map(t => `<span class="bg-gray-800 text-gray-300 text-[11px] px-2.5 py-0.5 rounded border border-gray-700">${t}</span>`).join('');
 
-                // Lore text
                 const loreBox = document.getElementById('modalLore');
                 loreBox.innerHTML = selectedServant.lore && selectedServant.lore.length > 0
                     ? selectedServant.lore.map(para => `<p>${para}</p>`).join('')
                     : `<p>${selectedServant.description || 'No archive description available.'}</p>`;
 
-                // Voice Lines Archive in Lore Modal
                 const voiceArchiveBox = document.getElementById('modalVoiceArchive');
                 const vLines = selectedServant.voiceLines || [];
 
@@ -924,6 +1019,16 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
                     voiceArchiveBox.innerHTML = `<p class="text-gray-500 text-xs text-center py-2">No voice audio archives recorded.</p>`;
                 }
 
+                document.getElementById('modalEditBtn').onclick = () => {
+                    toggleLoreModal();
+                    openFormModal(selectedServant.id);
+                };
+
+                document.getElementById('modalDeleteBtn').onclick = () => {
+                    toggleLoreModal();
+                    confirmDeleteServant(selectedServant.id);
+                };
+
                 loreModal.classList.remove('hidden');
                 setTimeout(() => loreModal.classList.remove('opacity-0'), 10);
             } else {
@@ -938,11 +1043,14 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
             const form = document.getElementById('servantForm');
             form.reset();
             document.getElementById('voiceLinesContainer').innerHTML = '';
+            document.getElementById('spritesContainer').innerHTML = '';
 
+            let target = null;
             if (servantId) {
-                const target = servantData.find(s => s.id === servantId);
-                if (!target) return;
+                target = servantData.find(s => s.id === servantId);
+            }
 
+            if (target) {
                 document.getElementById('formModalTitle').innerText = "EDIT SERVANT & VOICE ARCHIVE";
                 document.getElementById('editServantId').value = target.id;
                 document.getElementById('formName').value = target.name || '';
@@ -958,6 +1066,13 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
                 document.getElementById('formAttribute').value = target.attribute || '';
                 document.getElementById('formRace').value = target.race || '';
                 document.getElementById('formImage').value = target.image || '';
+
+                // Load Sprites
+                if (target.sprites && target.sprites.length > 0) {
+                    target.sprites.forEach(s => addSpriteInputRow(s.name, s.url));
+                } else {
+                    addSpriteInputRow("Stage 1", target.image || "");
+                }
 
                 // Load Voice Lines
                 if (target.voiceLines && target.voiceLines.length > 0) {
@@ -990,6 +1105,8 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
             } else {
                 document.getElementById('formModalTitle').innerText = "ADD NEW SERVANT";
                 document.getElementById('editServantId').value = '';
+                document.getElementById('formImage').value = '';
+                addSpriteInputRow("Stage 1", "");
                 addVoiceLineInputRow("Summoning", "", "Servant Saber, answering your summons.");
             }
 
@@ -1000,6 +1117,20 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
         function closeFormModal() {
             formModal.classList.add('opacity-0');
             setTimeout(() => formModal.classList.add('hidden'), 300);
+        }
+
+        function addSpriteInputRow(name = '', url = '') {
+            const container = document.getElementById('spritesContainer');
+            const row = document.createElement('div');
+            row.className = "sprite-line-row flex gap-2 items-center bg-[#1b2233] p-2 rounded border border-gray-700";
+
+            row.innerHTML = `
+                <input type="text" placeholder="Skin Name (e.g. Stage 1 / Costume)" value="${name}" class="sprite-name w-1/3 bg-[#121723] text-white border border-gray-700 rounded p-1.5 focus:border-[#cca566] outline-none text-xs">
+                <input type="url" placeholder="Image URL (https://...)" value="${url}" class="sprite-url w-2/3 bg-[#121723] text-white border border-gray-700 rounded p-1.5 focus:border-[#cca566] outline-none text-xs">
+                <button type="button" onclick="this.closest('.sprite-line-row').remove()" class="text-red-400 hover:text-red-300 font-bold px-2 cursor-pointer">✕</button>
+            `;
+
+            container.appendChild(row);
         }
 
         function addVoiceLineInputRow(title = '', audioUrl = '', text = '') {
@@ -1038,6 +1169,20 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
                 }
             });
 
+            // Collect sprites
+            const spriteRows = document.querySelectorAll('.sprite-line-row');
+            const spritesArray = [];
+            spriteRows.forEach(row => {
+                const name = row.querySelector('.sprite-name').value.trim();
+                const url = row.querySelector('.sprite-url').value.trim();
+                if (url) {
+                    spritesArray.push({ name: name || 'Skin', url: url });
+                }
+            });
+
+            const existingServant = editId ? servantData.find(s => s.id === parseInt(editId)) : null;
+            const defaultImg = document.getElementById('formImage').value.trim() || spritesArray[0]?.url || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500';
+
             const newServantObj = {
                 id: editId ? parseInt(editId) : Date.now(),
                 name: document.getElementById('formName').value,
@@ -1054,7 +1199,9 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
                 },
                 alignment: document.getElementById('formAlignment').value,
                 attribute: document.getElementById('formAttribute').value,
-                image: document.getElementById('formImage').value || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500',
+                image: defaultImg,
+                activeSpriteIndex: existingServant?.activeSpriteIndex ?? 0,
+                sprites: spritesArray.length > 0 ? spritesArray : [{ name: "Stage 1", url: defaultImg }],
                 voiceLines: voiceLines,
                 skills: [
                     { name: document.getElementById('formSkill1Name').value || 'Skill 1', effect: document.getElementById('formSkill1Effect').value || '-' },
@@ -1113,7 +1260,6 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
             });
         }
 
-        // Custom Modal Confirm & Toast Helpers (Replaces alert and confirm)
         function showConfirmDialog(title, msg, onConfirm) {
             const modal = document.getElementById('confirmModal');
             document.getElementById('confirmTitle').innerText = title;
@@ -1148,6 +1294,41 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
 
         searchBar.addEventListener('input', applyFilters);
 
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(servantData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "fgo_servants_backup.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast("Data berhasil di-export!");
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (Array.isArray(importedData)) {
+                        servantData = importedData;
+                        saveServantData();
+                        applyFilters();
+                        if (servantData.length > 0) showDetails(servantData[0]);
+                        showToast("Data berhasil di-import!");
+                    } else {
+                        showToast("Format file JSON tidak valid.");
+                    }
+                } catch (err) {
+                    showToast("Gagal membaca file JSON.");
+                }
+            };
+            reader.readAsText(file);
+        }
+
         // App Initialization
         window.onload = function() {
             applyFilters();
@@ -1155,64 +1336,6 @@ document.getElementById('bgCharTransparent').style.backgroundImage = servant.ima
                 showDetails(servantData[0]);
             }
         }
-
-        // Export data ke file JSON
-function exportData() {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(servantData, null, 2));
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "fgo_servants_backup.json");
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-    showToast("Data berhasil di-export!");
-}
-
-// Import data dari file JSON
-function importData(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const importedData = JSON.parse(e.target.result);
-            if (Array.isArray(importedData)) {
-                servantData = importedData;
-                saveServantData();
-                applyFilters();
-                if (servantData.length > 0) showDetails(servantData[0]);
-                showToast("Data berhasil di-import!");
-            } else {
-                showToast("Format file JSON tidak valid.");
-            }
-        } catch (err) {
-            showToast("Gagal membaca file JSON.");
-        }
-    };
-    reader.readAsText(file);
-}
-
-// Map nama Class ke path file SVG kamu
-const classIcons = {
-    "Saber": "assets/icons/saber.svg",
-    "Archer": "assets/icons/archer.svg",
-    "Lancer": "assets/icons/lancer.svg",
-    "Rider": "assets/icons/rider.svg",
-    "Caster": "assets/icons/caster.svg",
-    "Assassin": "assets/icons/assassin.svg",
-    "Berserker": "assets/icons/berserker.svg",
-    "Ruler": "assets/icons/ruler.svg",
-    "Avenger": "assets/icons/avenger.svg",
-    "MoonCancer": "assets/icons/mooncancer.svg",
-    "Shielder": "assets/icons/shielder.svg",
-    "Foreigner": "assets/icons/foreigner.svg",
-    "AlterEgo": "assets/icons/alterego.svg",
-    "Pretender": "assets/icons/pretender.svg",
-    "Beast": "assets/icons/beast.svg",
-    "UnBeast": "assets/icons/unbeast.svg",
-    "Unknown": "assets/icons/unknown.svg"
-};
     </script>
 </body>
 </html>
